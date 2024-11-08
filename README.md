@@ -15,7 +15,12 @@ World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/sake
 
 # Methods
 
+## Worflow
+
 ![image](https://github.com/user-attachments/assets/4dfce405-e0d0-4d2e-81e5-a719efa6a8ee)
+
+## LDA method
+to fill
 
 # Timeline
 # Organization within the team: A list of internal milestones up until project Milestone P3.
