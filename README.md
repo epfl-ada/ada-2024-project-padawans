@@ -14,6 +14,9 @@ imdb.com to retrieve movies' synopsis
 World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/saketk511/world-important-events-ancient-to-modern
 
 # Methods
+
+![image](https://github.com/user-attachments/assets/4dfce405-e0d0-4d2e-81e5-a719efa6a8ee)
+
 # Timeline
 # Organization within the team: A list of internal milestones up until project Milestone P3.
 
