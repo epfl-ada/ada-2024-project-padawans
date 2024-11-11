@@ -27,14 +27,6 @@ https://medium.com/analytics-vidhya/latent-dirichelt-allocation-1ec8729589d4#:~:
 ### Coherence score
 Coherence measures how well the words grouped in a given topic are related in meaning and whether they frequently co-occur within the same document. A higher coherence score indicates that the words in a topic are semantically related and distinct from other topics, suggesting that the topic grouping is meaningful and accurate.
 
-## Sentiment Analysis
-Sentiment analysis helps to identify the emotions conveyed in textual data. Depending on the algorithm used, texts can be classified into different categories. 
-
-### VADER and Hartmann
-For example, the simple VADER algorithm categorizes text as negative, neutral, or positive, while more advanced approaches, like the Hartmann model, classify emotions into seven distinct categories: anger, disgust, fear, joy, neutral, sadness, and surprise.
-source Hartmann: https://huggingface.co/j-hartmann/emotion-english-distilroberta-base
-source VADER: https://www.bairesdev.com/blog/best-python-sentiment-analysis-libraries/
-question: VADER c'est plus utiliser dans le context des  reseaux donc ptr pas optimal dans notre cas
 
 ## Worflow
 1. Exploring the potential of LDA to uncover themes from movie synopses
