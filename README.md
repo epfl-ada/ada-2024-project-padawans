@@ -3,7 +3,7 @@ README
 Smarter Movie Recommendations: Personalizing Choices with Socially-Aware Systems
 
 # Abstract (150 words)
-Movie recommendation systems typically rely on users' viewing history and preferences from similar users. However, these systems mostly focus on internal data within the streaming platform. What about external factors, like societal events? Such data can offer valuable insights into what people might want to watch depending on what the population as a whole is living. In this project, we'll use Latent Dirichlet Allocation (LDA) to uncover deeper movie themes beyond genres, identifying hidden patterns in movie synopses. By analyzing these themes, we can explore whether certain topics become more prominent during specific societal events. Ultimately, this approach could enable recommendations that reflect the current state of society.
+Movie recommendation systems typically rely on users' viewing history and preferences from similar users. However, these systems mostly focus on internal data within the streaming platform. What about external factors, like societal events? Such data can offer valuable insights into what people might want to watch depending on what the population as a whole is living. In this project, we'll use Latent Dirichlet Allocation (LDA) to uncover deeper movie themes beyond genres, identifying hidden patterns in movie synopses. By analyzing these themes we can use it to recommend similar movies to users and we can explore whether certain topics become more prominent during specific societal events. Ultimately, this approach could enable recommendations that reflect the current state of society.
 
 # Research questions
 + What themes can be recovered using LDA?
@@ -17,7 +17,8 @@ MPST: Movie Plot Synopses with Tags: to retrieve movies' synopsis (https://www.k
 World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/saketk511/world-important-events-ancient-to-modern
 
 # Methods
-Extracting synopses and 
+Extracting relevant synopses and historical events
+chekcing if we can unravel themes in the dataframe
 
 ## Worflow
 
