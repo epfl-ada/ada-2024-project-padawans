@@ -43,7 +43,7 @@ Coherence measures how well the words grouped in a given topic are related in me
    + After chosen events (see P2 analysis) check for rise in a genre/theme
 4. Sentiment analysis using the impact column of the historical dataset
    + Retrieve sentiment associated with the event from impact column
-   + Retrieve sentiment from the theme using pre-existing Sentiment Analysis libraries (https://www.bairesdev.com/blog/best-python-sentiment-analysis-libraries/)
+   + Compare to theme sentiment
   
    
 # Timeline
