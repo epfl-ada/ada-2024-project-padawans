@@ -1,6 +1,6 @@
 README 
 # Title to find
-Smarter Movie Recommendations: Personalizing Choices with Socially-Aware Systems
+Smarter Movie Recommendations: Personalizing Choices with Socially Aware Systems
 
 # Abstract (150 words)
 Movie recommendation systems typically rely on users' viewing history and preferences from similar users. However, these systems mostly focus on internal data within the streaming platform. What about external factors, like societal events? Such data can offer valuable insights into what people might want to watch depending on what the population as a whole is living. In this project, we'll use Latent Dirichlet Allocation (LDA) to uncover deeper movie themes beyond genres, identifying hidden patterns in movie synopses. By analyzing these themes we can use it to recommend similar movies to users and we can explore whether certain topics become more prominent during specific societal events. Ultimately, this approach could enable recommendations that reflect the current state of society.
@@ -10,23 +10,47 @@ Movie recommendation systems typically rely on users' viewing history and prefer
 + Are those reflecting the genres? Or labels from the MPST dataset?
 + Are movies with similar themes have been produced in similar countries or at similar times?
 + Do we observe trends after historical events?
-+ If yes how is the sentiment related to the theme?
++ If there is a rise in a theme after an event how does the theme relate to the sentiment associated with the event?
+
 
 # Proposed additional datasets
 MPST: Movie Plot Synopses with Tags: to retrieve movies' synopsis (https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)
 World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/saketk511/world-important-events-ancient-to-modern
 
 # Methods
-Extracting relevant synopses and historical events
-chekcing if we can unravel themes in the dataframe
+## Latent Dirichlet Allocation (LDA)
+Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. To assess the quality of the model, we can evaluate its coherence score. 
+sources: 
+https://medium.com/@pinakdatta/understanding-lda-unveiling-hidden-topics-in-text-data-9bbbd25ae162
+https://medium.com/analytics-vidhya/latent-dirichelt-allocation-1ec8729589d4#:~:text=Latent%20Dirichlet%20Allocation%20(LDA)%20is%20a%20method%20for%20associating%20sentences,facts%20before%20applying%20these%20processes.
+
+### Coherence score
+Coherence measures how well the words grouped in a given topic are related in meaning and whether they frequently co-occur within the same document. A higher coherence score indicates that the words in a topic are semantically related and distinct from other topics, suggesting that the topic grouping is meaningful and accurate.
+
+## Sentiment Analysis
+Sentiment analysis helps to identify the emotions conveyed in textual data. Depending on the algorithm used, texts can be classified into different categories. 
+
+### VADER and Hartmann
+For example, the simple VADER algorithm categorizes text as negative, neutral, or positive, while more advanced approaches, like the Hartmann model, classify emotions into seven distinct categories: anger, disgust, fear, joy, neutral, sadness, and surprise.
 
 ## Worflow
-
-![image](https://github.com/user-attachments/assets/4dfce405-e0d0-4d2e-81e5-a719efa6a8ee)
-
-## LDA method
-to fill
-
+1. Exploring the potential of LDA to uncover themes from movie synopses
+   + Synopses preprocessing (Removing stop words, names, ...)
+   + Test different number of topics
+   + Analyse their coherence score
+   + Analyse the most coherent topics
+2. Analyzing the identified themes to determine if they provide new insights
+   + Identify which movies are associated with each theme
+   + For all movies with the same theme check the timeline and country of origin
+3. What the trend of each theme? (weight by bow office if possible)
+   + Weight movies by their impacts (movies that have been watched more should be weighed more in the analysis)
+   + Check for aggregate
+   + After chosen events (see P2 analysis) check for rise in a genre/theme
+4. Sentiment analysis using the impact column of the historical dataset
+   + Retrieve sentiment associated with the event from impact column
+   + Retrieve sentiment from the theme using pre-existing Sentiment Analysis libraries (https://www.bairesdev.com/blog/best-python-sentiment-analysis-libraries/)
+  
+   
 # Timeline
 # Organization within the team: A list of internal milestones up until project Milestone P3.
 
