@@ -32,6 +32,9 @@ Sentiment analysis helps to identify the emotions conveyed in textual data. Depe
 
 ### VADER and Hartmann
 For example, the simple VADER algorithm categorizes text as negative, neutral, or positive, while more advanced approaches, like the Hartmann model, classify emotions into seven distinct categories: anger, disgust, fear, joy, neutral, sadness, and surprise.
+source Hartmann: https://huggingface.co/j-hartmann/emotion-english-distilroberta-base
+source VADER: https://www.bairesdev.com/blog/best-python-sentiment-analysis-libraries/
+question: VADER c'est plus utiliser dans le context des  reseaux donc ptr pas optimal dans notre cas
 
 ## Worflow
 1. Exploring the potential of LDA to uncover themes from movie synopses
