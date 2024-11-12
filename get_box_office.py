@@ -11,8 +11,7 @@ import numpy as np
 from imdb import IMDb
 import re
 
-full_movies_synopsis = pd.read_csv('test_thomas.csv')
-movies_synopsis = full_movies_synopsis.head()
+movies_synopsis = pd.read_csv('test_thomas.csv')
 
 #Create a dic telling if 'Movie box office revenue' is a NaN or not
 isnan_dic = movies_synopsis['Movie box office revenue'].isna()
