@@ -2,3 +2,4 @@ gensim
 IMDbPY
 kagglehub
 spacy
+plotly
