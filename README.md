@@ -108,8 +108,5 @@ To ensure the successful completion of the project within the remaining three we
 + Summarize insights: Assess model quality and compile the main findings related to new themes and their implications.
 + Prepare the final report and presentation: Highlight the project’s outcomes, insights, and recommendations for enhancing movie recommendations.
 
-
-# Organization within the team: A list of internal milestones up until project Milestone P3.
-
 *Note: Portions of the text, were reformulated using ChatGPT to enhance clarity and readability.*
 # Questions for TAs (optional): Add here any questions you have for us related to the proposed project.
