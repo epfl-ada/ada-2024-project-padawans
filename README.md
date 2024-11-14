@@ -33,7 +33,9 @@ Movie recommendation algorithms typically rely on what users have previously wat
 # Proposed additional datasets
 MPST: Movie Plot Synopses with Tags: to retrieve movies' synopsis (https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)
 
-World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/saketk511/world-important-events-ancient-to-modern
+IMDb ratings: to get movie ratings (https://developer.imdb.com/non-commercial-datasets/)
+
+(KEEP?) World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/saketk511/world-important-events-ancient-to-modern
 
 
 
@@ -80,7 +82,7 @@ Some files required for this project are too large to store in the repository (>
    - Location: Place this file in the `DATA/Raw/` folder and unzip its contents inside `DATA/Raw/archive`.
 
 3. **Movie ratings dataset**: [link to file](https://datasets.imdbws.com/title.ratings.tsv.gz)  
-   - Description: Contains movies' ratings (and tags).
+   - Description: Contains movie ratings (mean) and the number of ratings received.
    - Location: Place this file in the `DATA/Raw/` folder and unzip its content inside.
 
 Make sure to follow the directory structure to ensure the project runs correctly.
