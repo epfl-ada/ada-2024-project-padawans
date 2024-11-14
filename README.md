@@ -31,11 +31,17 @@ Movie recommendation algorithms typically rely on users' viewing history and pre
 # Proposed additional datasets
 MPST: Movie Plot Synopses with Tags: to retrieve movies' synopsis (https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)
 
-World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/saketk511/world-important-events-ancient-to-modern
-
 # Methods
 ## Latent Dirichlet Allocation (LDA)
-Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. To assess the quality of the model, we can evaluate its coherence score.
+Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Initially, LDA randomly assigns words to topics, kicking off a learning procedure. It then traverses through each word in each document, applying the formula discussed earlier. Through numerous iterations of this procedure, it eventually yields a set of topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. 
+It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. 
+
+The users must decide on the amount of topics present in the document as well as interpret what the topics are.
+
+To assess the quality of the model, we will evaluate its coherence score.
+
+
+![Alt text](https://miro.medium.com/v2/resize:fit:1178/format:webp/0*J1oMupf58psVRVCH.png)
 
 sources: 
 https://medium.com/@pinakdatta/understanding-lda-unveiling-hidden-topics-in-text-data-9bbbd25ae162
@@ -66,19 +72,24 @@ Coherence measures how well the words grouped in a given topic are related in me
 
 ## Required External Files
 
-Some files required for this project are too large to store in the repository (>25MB). Once you have cloned the repository locally, please download the required files from the following sources:
+Some files required for this project are too large to store in the repository (>25MB). Thus, once you have cloned the repository locally, please download the required files from the following sources:
 
-1. **File 1**: [link to file](https://www.cs.cmu.edu/~ark/personas/)  
+1. **Movie Summaries**: [link to file](https://www.cs.cmu.edu/~ark/personas/data/MovieSummaries.tar.gz)  
    - Description: Original given movie dataset.
-   - Steps: Simply click on the 'Dataset' [46 MB] link to start downloading the zip file. Once downloaded, place it in the "Location" and unzip it.
-   - Location: Place this file and its contents in the `DATA/Raw/` folder.
+   - Location: Place this file and its contents in the `DATA/Raw/` folder and unzip its contents inside `DATA/Raw/MovieSummaries`.
 
-2. **File 2**: [link to file](https://example.com/file2.zip)  
-   - Description: Model weights for ABC model.
-   - Location: Place this file in the `DATA/Raw/` folder.
+2. **MPST: Movie Plot Synopses with Tags**: [link to file](https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)  
+   - Description: Contains movies' synopsis (and tags).
+   - Steps to follow: Click on the Download button on the top right part of the screen to download the file. It will show you a sub-menu where you can click on 'Download dataset as zip (30 MB)' to download the file.
+   - Location: Place this file in the `DATA/Raw/` folder and unzip its contents inside `DATA/Raw/archive`.
+
+3. **Movie ratings dataset**: [link to file](https://datasets.imdbws.com/title.ratings.tsv.gz)  
+   - Description: Contains movies' ratings (and tags).
+   - Location: Place this file in the `DATA/Raw/` folder and unzip its content inside.
 
 Make sure to follow the directory structure to ensure the project runs correctly.
 
+Note: All processed files will be stored in the `DATA/Processed/` directory.
 
 
 # Timeline
