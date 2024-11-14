@@ -23,6 +23,7 @@ Movie recommendation algorithms typically rely on what users have previously wat
 + Are themes reflecting countries or epoques/should the country be taken into account?
 + What are the differences between the ratings of different movie themes?
 + Should movies with higher ratings or box office earnings be given more importance when recommending similar films?
+
 *Note: If the coherence score is low the rest of the analysis will remain valid using the label from the MPST dataset*
 
 # Proposed additional datasets
