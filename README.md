@@ -19,9 +19,8 @@ Movie recommendation algorithms often use users' viewing histories to suggest si
 # Research questions
 + What themes can be recovered using LDA?
 + Were new themes/topics discovered? Are those reflecting the genres? Or labels from the MPST dataset?
-+ Are themes reflecting countries or epoques/should the country be taken into account?
-+ What are the differences between the ratings of different movie themes?
-+ Should movies with higher ratings or box office earnings be given more importance when recommending similar films?
++ Are themes reflecting countries or epoques ?
++ What are the differences between the ratings/box-office of different movie themes?
 
 *Note: If the coherence score is low the rest of the analysis will remain valid using the label from the MPST dataset*
 
@@ -33,7 +32,7 @@ IMDb ratings: to get movie ratings (https://developer.imdb.com/non-commercial-da
 
 # Methods
 ## Latent Dirichlet Allocation (LDA)
-Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Initially, LDA randomly assigns words to topics, kicking off a learning procedure. It then traverses through each word in each document, applying the formula discussed earlier. Through numerous iterations of this procedure, it eventually yields a set of topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. 
+Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Initially, LDA randomly assigns words to topics, kicking off a learning procedure. It then traverses through each word in each document, applying the formula in the source. Through numerous iterations of this procedure, it eventually yields a set of topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. 
 It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. 
 
 The users must decide on the amount of topics present in the document as well as interpret what the topics are.
@@ -57,15 +56,10 @@ Coherence measures how well the words grouped in a given topic are related in me
    + Analyse their coherence score
    + Analyse the most coherent topics
 2. Analyzing the identified themes to determine if they provide new insights
-   + Identify which movies are associated with each theme
-   + For all movies with the same theme check the timeline and country of origin
-3. What are the trend of each theme? (weight by box-office if possible)
-   + Weight movies by their impacts (movies that have been watched more should be weighed more in the analysis)
-   + Check for aggregate
-   + After chosen events (see P2 analysis) check for rise in a genre/theme
-4. Sentiment analysis using the impact column of the historical dataset
-   + Retrieve sentiment associated with the event from impact column
-   + Compare to theme sentiment
+   + Check if we see some similarities between MPST labels and the themes found
+   + Group movies by theme and check the characteristics such as country, ratings, box-office and genre
+   + Analyze if some themes are predominant at some periods
+
   
 ## Required External Files
 
@@ -96,12 +90,11 @@ To ensure the successful completion of the project within the remaining three we
 + Preprocess movie synopses: Clean and prepare the data by removing stop words, names, and any irrelevant content.
 + Implement the LDA model: Apply the model to the preprocessed data and experiment with different numbers of topics.
 + Optimize for coherence scores: Identify the most coherent topics and interpret them.
-### Week 2: Analysis and Cross-Metadata Evaluation
+### Week 2: Analysis of the themes discovered
 + Identify and analyze discovered themes: Determine if these themes align with or provide new insights beyond existing genres and tags.
-+ Cross-analyze with metadata: Evaluate movie ratings and box office revenue to see if they have an impact on theme discovery.
-+ Conduct temporal and regional analysis: Analyze trends over time and across different regions for the discovered themes.
-### Week 3: Sentiment Analysis and Final Reporting
-+ Perform sentiment analysis: Compare the sentiment of identified themes with the impact data from historical events (if applicable).
++ Check if some themes have tendancies in box-office or ratings.
++ Check the temporal evolution of themes.
+### Week 3: Gather results and write Final Reporting
 + Summarize insights: Assess model quality and compile the main findings related to new themes and their implications.
 + Prepare the final report and presentation: Highlight the project’s outcomes, insights, and recommendations for enhancing movie recommendations.
 
