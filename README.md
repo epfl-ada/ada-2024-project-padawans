@@ -8,7 +8,7 @@ git clone https://github.com/epfl-ada/ada-2024-project-padawans.git
 cd <project repo>
 
 # install requirements
-pip install -r requirements.txt
+pip install -r pip_requirements.txt
 ```
 
 
