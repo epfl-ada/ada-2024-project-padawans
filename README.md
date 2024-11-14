@@ -48,18 +48,6 @@ sources:
 https://medium.com/@pinakdatta/understanding-lda-unveiling-hidden-topics-in-text-data-9bbbd25ae162
 https://medium.com/analytics-vidhya/latent-dirichelt-allocation-1ec8729589d4#:~:text=Latent%20Dirichlet%20Allocation%20(LDA)%20is%20a%20method%20for%20associating%20sentences,facts%20before%20applying%20these%20processes.
 
-## Worflow
-1. Exploring the potential of LDA to uncover themes from movie synopses
-   + Synopses preprocessing
-   + Test different number of topics
-   + Analyse their coherence score
-   + Analyse the most coherent topics
-2. Analyzing the identified themes to determine if they provide new insights
-   + Check if we see some similarities between MPST labels and the themes found
-   + Group movies by theme and check the characteristics such as country, ratings, box-office and genre
-   + Analyze if some themes are predominant at some periods
-
-  
 ## Required External Files
 
 Some files required for this project are too large to store in the repository (>25MB). Thus, once you have cloned the repository locally, please download the required files from the following sources:
@@ -80,7 +68,7 @@ Some files required for this project are too large to store in the repository (>
 Make sure to follow the directory structure to ensure the project runs correctly.
    
 # Timeline
-1. Present different themes obtained with LDA
+1. Present different themes obtained with LDA, depending on the number of topics
 2. Compare the themes obtained with the labels and the genres
 3. Look at the characteristics (country, ratings, box-office) of the themes
 4. Look at the temporal evolution of the themes
