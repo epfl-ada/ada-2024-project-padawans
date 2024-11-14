@@ -4,7 +4,7 @@ Smarter Movie Recommendations: Personalizing Choices with Socially Aware Systems
 
 ```bash
 # clone project
-git clone <project link>
+git clone https://github.com/epfl-ada/ada-2024-project-padawans.git
 cd <project repo>
 
 # install requirements
