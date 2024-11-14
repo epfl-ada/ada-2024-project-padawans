@@ -9,6 +9,7 @@ cd <project repo>
 
 # install requirements
 pip install -r requirements.txt
+```
 
 
 # Abstract (150 words)
