@@ -35,6 +35,8 @@ MPST: Movie Plot Synopses with Tags: to retrieve movies' synopsis (https://www.k
 
 World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/saketk511/world-important-events-ancient-to-modern
 
+
+
 # Methods
 ## Latent Dirichlet Allocation (LDA)
 Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. To assess the quality of the model, we can evaluate its coherence score.
@@ -62,7 +64,28 @@ Coherence measures how well the words grouped in a given topic are related in me
    + After chosen events (see P2 analysis) check for rise in a genre/theme
 4. Sentiment analysis using the impact column of the historical dataset
    + Retrieve sentiment associated with the event from impact column
-   + Compare to theme sentiment 
+   + Compare to theme sentiment
+  
+## Required External Files
+
+Some files required for this project are too large to store in the repository (>25MB). Thus, once you have cloned the repository locally, please download the required files from the following sources:
+
+1. **Movie Summaries**: [link to file](https://www.cs.cmu.edu/~ark/personas/data/MovieSummaries.tar.gz)  
+   - Description: Original given movie dataset.
+   - Location: Place this file and its contents in the `DATA/Raw/` folder and unzip its contents inside `DATA/Raw/MovieSummaries`.
+
+2. **MPST: Movie Plot Synopses with Tags**: [link to file](https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)  
+   - Description: Contains movies' synopsis (and tags).
+   - Steps to follow: Click on the Download button on the top right part of the screen to download the file. It will show you a sub-menu where you can click on 'Download dataset as zip (30 MB)' to download the file.
+   - Location: Place this file in the `DATA/Raw/` folder and unzip its contents inside `DATA/Raw/archive`.
+
+3. **Movie ratings dataset**: [link to file](https://datasets.imdbws.com/title.ratings.tsv.gz)  
+   - Description: Contains movies' ratings (and tags).
+   - Location: Place this file in the `DATA/Raw/` folder and unzip its content inside.
+
+Make sure to follow the directory structure to ensure the project runs correctly.
+
+Note: All processed files will be stored in the `DATA/Processed/` directory.
    
 # Timeline
 # Organization within the team: A list of internal milestones up until project Milestone P3.
