@@ -1,0 +1,8 @@
+numpy
+matplotlib
+pandas
+gensim
+IMDbPY
+kagglehub
+spacy
+plotly
