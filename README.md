@@ -13,7 +13,7 @@ pip install -r pip_requirements.txt
 
 
 # Abstract (150 words)
-Movie recommendation algorithms often use users' viewing histories to suggest similar content through a method known as Content-Based Filtering. Similarity can be defined in many ways, such as shared directors or box-office earnings. This project focuses on using movie synopses to assess similarity, employing Latent Dirichlet Allocation (LDA) for unsupervised clustering. LDA is utilized to uncover hidden themes within movie synopses that extend beyond conventional genres, revealing deeper patterns in movie content. By analyzing these newly discovered themes, we aim to identify unique connections between films, enabling enhanced and diversified movie recommendations.
+Movie recommendation algorithms often use users' viewing histories to suggest similar content through a method known as Content-Based Filtering. Similarity can be defined in many ways, such as genres, shared directors or box-office earnings. This project focuses on using movie synopses to assess similarity, employing Latent Dirichlet Allocation (LDA) for unsupervised clustering. LDA is utilized to uncover hidden themes within movie synopses that extend beyond conventional genres, revealing deeper patterns in movie content. By analyzing these newly discovered themes, we aim to identify unique connections between films, enabling enhanced and diversified movie recommendations.
 
 
 # Research questions
@@ -81,6 +81,12 @@ Some files required for this project are too large to store in the repository (>
 Make sure to follow the directory structure to ensure the project runs correctly.
    
 # Timeline
+1. Present different themes obtained with LDA
+2. Compare the themes obtained with the labels and the genres
+3. Look at the characteristics (country, ratings, box-office) of the themes
+4. Look at the temporal evolution of the themes
+
+# Organization within the team: A list of internal milestones up until project Milestone P3.
 To ensure the successful completion of the project within the remaining three weeks, the following timeline has been established:
 
 ### Week 1: Data Preparation and Model Implementation
@@ -95,9 +101,6 @@ To ensure the successful completion of the project within the remaining three we
 ### Week 3: Gather results and write Final Reporting
 + Summarize insights: Assess model quality and compile the main findings related to new themes and their implications.
 + Prepare the final report and presentation: Highlight the project’s outcomes, insights, and recommendations for enhancing movie recommendations.
-
-
-# Organization within the team: A list of internal milestones up until project Milestone P3.
 
 *Note: Portions of the text, were reformulated using ChatGPT to enhance clarity and readability.*
 # Questions for TAs (optional): Add here any questions you have for us related to the proposed project.
