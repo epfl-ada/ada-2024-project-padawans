@@ -32,7 +32,7 @@ IMDb ratings: to get movie ratings (https://developer.imdb.com/non-commercial-da
 
 # Methods
 ## Latent Dirichlet Allocation (LDA)
-Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Initially, LDA randomly assigns words to topics, kicking off a learning procedure. It then traverses through each word in each document, applying the formula in the source. Through numerous iterations of this procedure, it eventually yields a set of topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. 
+Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Initially, LDA randomly assigns words to topics, kicking off a learning procedure. It then traverses through each word in each document, applying the complex formula presented in the source. Through numerous iterations of this procedure, it eventually yields a set of topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. 
 It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. 
 
 The users must decide on the amount of topics present in the document as well as interpret what the topics are.
@@ -41,13 +41,12 @@ To assess the quality of the model, we will evaluate its coherence score.
 
 ![Alt text](https://miro.medium.com/v2/resize:fit:1178/format:webp/0*J1oMupf58psVRVCH.png)
 
-sources: 
-https://medium.com/@pinakdatta/understanding-lda-unveiling-hidden-topics-in-text-data-9bbbd25ae162
-https://medium.com/analytics-vidhya/latent-dirichelt-allocation-1ec8729589d4#:~:text=Latent%20Dirichlet%20Allocation%20(LDA)%20is%20a%20method%20for%20associating%20sentences,facts%20before%20applying%20these%20processes.
-
 ### Coherence score
 Coherence measures how well the words grouped in a given topic are related in meaning and whether they frequently co-occur within the same document. A higher coherence score indicates that the words in a topic are semantically related and distinct from other topics, suggesting that the topic grouping is meaningful and accurate.
 
+sources: 
+https://medium.com/@pinakdatta/understanding-lda-unveiling-hidden-topics-in-text-data-9bbbd25ae162
+https://medium.com/analytics-vidhya/latent-dirichelt-allocation-1ec8729589d4#:~:text=Latent%20Dirichlet%20Allocation%20(LDA)%20is%20a%20method%20for%20associating%20sentences,facts%20before%20applying%20these%20processes.
 
 ## Worflow
 1. Exploring the potential of LDA to uncover themes from movie synopses
