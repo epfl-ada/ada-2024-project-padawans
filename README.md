@@ -1,6 +1,6 @@
 README 
 # Title to find
-Smarter Movie Recommendations: Personalizing Choices with Socially Aware Systems
+Watch out for unexpected Movie recommendations
 
 ```bash
 # clone project
@@ -13,19 +13,21 @@ pip install -r requirements.txt
 
 
 # Abstract (150 words)
-Movie recommendation algorithms typically rely on users' viewing history and preferences from similar users. However, these systems mostly focus on internal data within the streaming platform. What about external factors, like societal events? Such data can offer valuable insights into what people might want to watch depending on what the population as a whole is living. In this project, we'll use Latent Dirichlet Allocation (LDA) to uncover deeper movie themes beyond genres, identifying hidden patterns in movie synopses. By analyzing these themes we can use it to recommend similar movies to users in a classic way but also we can explore whether certain topics become more prominent during specific societal events. Ultimately, this approach could enable recommendations that reflect the current state of society.
+Movie recommendation algorithms typically rely on what users have previously watched to recommend similar content. This method is called Content-Based Filtering. The notion of similarity can vary from movie director to box-office revenue and so on. In this project, movies's synopses are used to assess similarities. We use Unsupervised clustering Latent Dirichlet Allocation (LDA) to uncover movie themes beyond genres, identifying patterns in movie synopses. By analyzing these new themes we can discover new similarities between movies and recommend them based on that. 
+
+
 
 # Research questions
 + What themes can be recovered using LDA?
-+ Are those reflecting the genres? Or labels from the MPST dataset?
-+ Have movies with similar themes been produced in similar countries or at similar times?
-+ Does the box office income of movies about certain themes change depending on the period the movie has been produced?
-+ Do we observe trends after historical events?
-+ If there is a rise in a theme after an event how does the theme relate to the sentiment associated with the event?
-+ How do ratings for the same movie theme vary by period?
++ How many ways are there to efficiently cluster movie synopses? (Topics = 1 or 56?!)
++ Were new themes/topics discovered? Are those reflecting the genres? Or labels from the MPST dataset?
++ Are themes reflecting countries or epoques/should the country be taken into account?
++ What to do if 2 movies show similar levels of similarities?
++ Should movies with higher ratings or box office earnings be given more importance when recommending similar films?
++ Does the box office revenue of certain themes vary based on the period in which the movie was made?
++ How do theme ratings vary by period?
 + What are the differences between the ratings of different movie themes?
-+ How do user ratings and movie box office revenue correlate?
-+ Is it feasible to group movies by similar theme to propose to the viewer a movie they will likely enjoy?
++ Should movies with higher ratings or box office earnings be given more importance when recommending similar films?
 
 
 # Proposed additional datasets
