@@ -95,16 +95,16 @@ Note: All processed files will be stored in the `DATA/Processed/` directory.
 # Timeline
 To ensure the successful completion of the project within the remaining three weeks, the following timeline has been established:
 
-Week 1: Data Preparation and Model Implementation
+### Week 1: Data Preparation and Model Implementation
 + Download and organize datasets: Ensure that MPST movie synopses, IMDb ratings, and optional historical event data are stored correctly.
 + Preprocess movie synopses: Clean and prepare the data by removing stop words, names, and any irrelevant content.
 + Implement the LDA model: Apply the model to the preprocessed data and experiment with different numbers of topics.
 + Optimize for coherence scores: Identify the most coherent topics and interpret them.
-Week 2: Analysis and Cross-Metadata Evaluation
+### Week 2: Analysis and Cross-Metadata Evaluation
 + Identify and analyze discovered themes: Determine if these themes align with or provide new insights beyond existing genres and tags.
 + Cross-analyze with metadata: Evaluate movie ratings and box office revenue to see if they have an impact on theme discovery.
 + Conduct temporal and regional analysis: Analyze trends over time and across different regions for the discovered themes.
-Week 3: Sentiment Analysis and Final Reporting
+### Week 3: Sentiment Analysis and Final Reporting
 + Perform sentiment analysis: Compare the sentiment of identified themes with the impact data from historical events (if applicable).
 + Summarize insights: Assess model quality and compile the main findings related to new themes and their implications.
 + Prepare the final report and presentation: Highlight the project’s outcomes, insights, and recommendations for enhancing movie recommendations.
