@@ -86,7 +86,7 @@ Note: All processed files will be stored in the `DATA/Processed/` directory.
 To ensure the successful completion of the project within the remaining three weeks, the following timeline has been established:
 
 ### Week 1: Data Preparation and Model Implementation
-+ Download and organize datasets: Ensure that MPST movie synopses, IMDb ratings, and optional historical event data are stored correctly.
++ Download and organize datasets
 + Preprocess movie synopses: Clean and prepare the data by removing stop words, names, and any irrelevant content.
 + Implement the LDA model: Apply the model to the preprocessed data and experiment with different numbers of topics.
 + Optimize for coherence scores: Identify the most coherent topics and interpret them.
