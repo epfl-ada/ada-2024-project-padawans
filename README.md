@@ -8,7 +8,8 @@ Movie recommendation systems typically rely on users' viewing history and prefer
 # Research questions
 + What themes can be recovered using LDA?
 + Are those reflecting the genres? Or labels from the MPST dataset?
-+ Are movies with similar themes have been produced in similar countries or at similar times?
++ Have movies with similar themes been produced in similar countries or at similar times?
++ Does the box office income of movies about certain themes change depending on the period the movie has been produced?
 + Do we observe trends after historical events?
 + If there is a rise in a theme after an event how does the theme relate to the sentiment associated with the event?
 
