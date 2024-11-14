@@ -51,7 +51,7 @@ Coherence measures how well the words grouped in a given topic are related in me
 
 ## Worflow
 1. Exploring the potential of LDA to uncover themes from movie synopses
-   + Synopses preprocessing (Removing stop words, names, ...)
+   + Synopses preprocessing
    + Test different number of topics
    + Analyse their coherence score
    + Analyse the most coherent topics
