@@ -13,14 +13,14 @@ pip install -r pip_requirements.txt
 
 
 # Abstract (150 words)
-Movie recommendation algorithms often use users' viewing histories to suggest similar content through a method known as Content-Based Filtering. Similarity can be defined in many ways, such as shared directors or box-office earnings. This project focuses on using movie synopses to assess similarity, employing Latent Dirichlet Allocation (LDA) for unsupervised clustering. LDA is utilized to uncover hidden themes within movie synopses that extend beyond conventional genres, revealing deeper patterns in movie content. By analyzing these newly discovered themes, we aim to identify unique connections between films, enabling enhanced and diversified movie recommendations that aren't solely genre-dependent.
+Movie recommendation algorithms often use users' viewing histories to suggest similar content through a method known as Content-Based Filtering. Similarity can be defined in many ways, such as shared directors or box-office earnings. This project focuses on using movie synopses to assess similarity, employing Latent Dirichlet Allocation (LDA) for unsupervised clustering. LDA is utilized to uncover hidden themes within movie synopses that extend beyond conventional genres, revealing deeper patterns in movie content. By analyzing these newly discovered themes, we aim to identify unique connections between films, enabling enhanced and diversified movie recommendations.
 
 
 # Research questions
 + What themes can be recovered using LDA?
-+ Were new themes/topics discovered? Are those reflecting the genres? Or labels from the MPST dataset?
++ Are those themes reflecting the genres? Or labels from the MPST dataset?
 + Are themes reflecting countries or epoques ?
-+ What are the differences between the ratings/box-office of different movie themes?
++ What are the tendancies in ratings/box-office for different movie themes?
 
 *Note: If the coherence score is low the rest of the analysis will remain valid using the label from the MPST dataset*
 
