@@ -41,7 +41,12 @@ IMDb ratings: to get movie ratings (https://developer.imdb.com/non-commercial-da
 
 # Methods
 ## Latent Dirichlet Allocation (LDA)
-Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. To assess the quality of the model, we can evaluate its coherence score.
+Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Initially, LDA randomly assigns words to topics, kicking off a learning procedure. It then traverses through each word in each document, applying the formula discussed earlier. Through numerous iterations of this procedure, it eventually yields a set of topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. 
+It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. 
+
+The users must decide on the amount of topics present in the document as well as interpret what the topics are.
+
+To assess the quality of the model, we will evaluate its coherence score.
 
 ![Alt text](https://miro.medium.com/v2/resize:fit:1178/format:webp/0*J1oMupf58psVRVCH.png)
 
