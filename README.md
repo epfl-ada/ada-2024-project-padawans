@@ -52,16 +52,20 @@ Some files required for this project are too large to store in the repository (>
 
 1. **Movie Summaries**: [link to file](https://www.cs.cmu.edu/~ark/personas/data/MovieSummaries.tar.gz)  
    - Description: Original given movie dataset.
-   - Location: Place this file and its contents in the `data/` folder.
+   - Location: Place this file and its contents in the `Data/` folder.
 
 2. **MPST: Movie Plot Synopses with Tags**: [link to file](https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)  
    - Description: Contains movies' synopsis (and tags).
    - Steps to follow: Click on the Download button on the top right part of the screen to download the file. It will show you a sub-menu where you can click on 'Download dataset as zip (30 MB)' to download the file.
-   - Location: Place this file in the `data/` folder.
+   - Location: Place this file in the `Data/` folder.
 
 3. **Movie ratings dataset**: [link to file](https://datasets.imdbws.com/title.ratings.tsv.gz)  
    - Description: Contains movie ratings (mean) and the number of ratings received.
-   - Location: Place this file in the `data/` folder.
+   - Location: Place this file in the `Data/` folder.
+
+4. **Movies with IMDB Box Income**: [link to file](https://drive.google.com/file/d/16fzzKCWkodC6PZbqrgmg6YYQlNOHe5XB/view?usp=sharing)  
+   - Description: Contains movie box incomes extracted with IMdB library
+   - Location: Place this file in the `Data/` folder.
 
 Make sure to follow the directory structure to ensure the project runs correctly.
    
