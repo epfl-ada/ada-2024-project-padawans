@@ -30,9 +30,6 @@ MPST: Movie Plot Synopses with Tags: to retrieve movies' synopsis (https://www.k
 
 IMDb ratings: to get movie ratings (https://developer.imdb.com/non-commercial-datasets/)
 
-(KEEP?) World Important Events - Ancient to Modern: https://www.kaggle.com/datasets/saketk511/world-important-events-ancient-to-modern
-
-
 
 # Methods
 ## Latent Dirichlet Allocation (LDA)
