@@ -1,6 +1,5 @@
 README 
-# Title to find
-Watch out for unexpected Movie recommendations
+# Watch out for unexpected movie recommendations !
 
 ```bash
 # clone project
