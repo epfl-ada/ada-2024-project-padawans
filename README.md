@@ -111,4 +111,5 @@ To ensure the successful completion of the project within the remaining three we
 
 # Organization within the team: A list of internal milestones up until project Milestone P3.
 
+*Note: Portions of the text, were reformulated using ChatGPT to enhance clarity and readability.
 # Questions for TAs (optional): Add here any questions you have for us related to the proposed project.
