@@ -67,11 +67,15 @@ Some files required for this project are too large to store in the repository (>
    - This file can be found in the `Data/` folder.
    - Description: Contains movie box incomes extracted with IMdB library
 
+5. **Processed sentences for LDA** [link to file](https://drive.google.com/file/d/1K_l2LZGIvGgbZ3Q-u0v3W-_dRlWlIpOM/view?usp=sharing)
+   - Description: Contains
+   - Location: Place this file in the `Data/` folder.
+   
 Make sure to follow the directory structure to ensure the project runs correctly.
 
 ## Important note 
 
-In order to visualise the 3 interactive plots, it is required to simply download the results.ipynb and to open it in a code editor such as VSC (The code will already be run).
+In order to visualise the three interactive Plotly plots, it is required to simply download the results.ipynb notebook and to open it in a code editor such as VSCode (the code will already be run). These plots are not shown in the file on github.
    
 # Timeline
 1. Present different themes obtained with LDA, depending on the number of topics
