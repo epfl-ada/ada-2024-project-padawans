@@ -64,9 +64,8 @@ Some files required for this project are too large to store in the repository (>
    - Location: Place this file in the `Data/` folder.
 
 4. **Movies with IMDB Box Income** (movies_synopsis_comp.csv)
-   - This file can be found in the repository.
+   - This file can be found in the Data/ folder.
    - Description: Contains movie box incomes extracted with IMdB library
-   - Location: Place this file in the `Data/` folder.
 
 Make sure to follow the directory structure to ensure the project runs correctly.
    
