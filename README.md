@@ -64,10 +64,14 @@ Some files required for this project are too large to store in the repository (>
    - Location: Place this file in the `Data/` folder.
 
 4. **Movies with IMDB Box Income** (movies_synopsis_comp.csv)
-   - This file can be found in the Data/ folder.
+   - This file can be found in the `Data/` folder.
    - Description: Contains movie box incomes extracted with IMdB library
 
 Make sure to follow the directory structure to ensure the project runs correctly.
+
+## Important note 
+
+In order to visualise the 3 interactive plots, it is required to simply download the results.ipynb and to open it in a code editor such as VSC (The code will already be run).
    
 # Timeline
 1. Present different themes obtained with LDA, depending on the number of topics
