@@ -52,7 +52,7 @@ Some files required for this project are too large to store in the repository (>
 
 1. **Movie Summaries**: [link to file](https://www.cs.cmu.edu/~ark/personas/data/MovieSummaries.tar.gz)  
    - Description: Original given movie dataset.
-   - Location: Place this file and its contents in the `Data/` folder.
+   - Location: Unzip the file and only keep `movie.metadata.tsv` and `plot_summaries` in the `Data/` folder.
 
 2. **MPST: Movie Plot Synopses with Tags**: [link to file](https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)  
    - Description: Contains movies' synopsis (and tags).
