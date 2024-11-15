@@ -13,6 +13,11 @@ from imdb import IMDb
 import re
 
 #Functions
+def replace_empty_with_nan(value):
+    # Replace empty lists with NaN
+    if isinstance(value, list) and len(value) == 0:
+        return np.nan
+    return value
 
 def convert_to_list(df, column_name):
     #Convert to dictionnary 
