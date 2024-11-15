@@ -67,7 +67,7 @@ Some files required for this project are too large to store in the repository (>
    - This file can be found in the `Data/` folder.
    - Description: Contains movie box incomes extracted with IMdB library
 
-5. **Processed sentences for LDA** [link to file](https://drive.google.com/file/d/1K_l2LZGIvGgbZ3Q-u0v3W-_dRlWlIpOM/view?usp=sharing)
+5. **Processed sentences for LDA**: [link to file](https://drive.google.com/file/d/1K_l2LZGIvGgbZ3Q-u0v3W-_dRlWlIpOM/view?usp=sharing)
    - Description: Contains
    - Location: Place this file in the `Data/` folder.
    
