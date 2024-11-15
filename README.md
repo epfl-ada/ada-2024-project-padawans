@@ -68,7 +68,7 @@ Some files required for this project are too large to store in the repository (>
    - Description: Contains movie box incomes extracted with IMdB library
 
 5. **Processed sentences for LDA**: [link to file](https://drive.google.com/file/d/1K_l2LZGIvGgbZ3Q-u0v3W-_dRlWlIpOM/view?usp=sharing)
-   - Description: Contains preprocessed sentences used by LDA.
+   - Description: Contains sentences without stop words and names.
    - Location: Place this file in the `Data/` folder.
    
 Make sure to follow the directory structure to ensure the project runs correctly.
