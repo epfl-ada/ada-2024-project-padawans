@@ -56,7 +56,7 @@ Some files required for this project are too large to store in the repository (>
 
 2. **MPST: Movie Plot Synopses with Tags**: [link to file](https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)  
    - Description: Contains movies' synopsis (and tags).
-   - Steps to follow: Click on the Download button on the top right part of the screen to download the file. It will show you a sub-menu where you can click on 'Download dataset as zip (30 MB)' to download the file.
+   - Steps to follow: Click on the Download button on the top right part of the screen to download the file. It will show you a sub-menu where you can click on 'Download dataset as zip' to download the file.
    - Location: Place this file in the `Data/` folder.
 
 3. **Movie ratings dataset**: [link to file](https://datasets.imdbws.com/title.ratings.tsv.gz)  
@@ -68,7 +68,7 @@ Some files required for this project are too large to store in the repository (>
    - Description: Contains movie box incomes extracted with IMdB library
 
 5. **Processed sentences for LDA**: [link to file](https://drive.google.com/file/d/1K_l2LZGIvGgbZ3Q-u0v3W-_dRlWlIpOM/view?usp=sharing)
-   - Description: Contains
+   - Description: Contains preprocessed sentences used by LDA.
    - Location: Place this file in the `Data/` folder.
    
 Make sure to follow the directory structure to ensure the project runs correctly.
@@ -99,5 +99,3 @@ To ensure the successful completion of the project within the remaining three we
 + Summarize insights: Assess model quality and compile the main findings related to new themes and their implications.
 + Prepare the final report and presentation: Highlight the project’s outcomes, insights, and recommendations for enhancing movie recommendations.
 
-*Note: Portions of the text, were reformulated using ChatGPT to enhance clarity and readability.*
-# Questions for TAs (optional): Add here any questions you have for us related to the proposed project.
