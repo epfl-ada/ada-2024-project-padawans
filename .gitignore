@@ -3,4 +3,5 @@ Data/movies_ratings.csv
 Data/mpst_full_data.csv
 Data/plot_summaries.txt
 Data/title.ratings.tsv
+Data/processed_sentences.pkl
 .DS_Store
