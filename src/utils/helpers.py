@@ -53,28 +53,41 @@ def get_box_office(imdb_ID): #return the box-office revenue for a specific imdb_
         return box_office_num
     return None  # Return None if no box office data is found
 
+def get_intra_similarity(word_list, model_w2v):
+    length = len(word_list)
+    intra_sim = 0
+    for i in range(length):
+        for j in range(length):
+            if i != j:
+                if word_list[i] in model_w2v and word_list[j] in model_w2v:
+                    intra_sim += model_w2v.similarity(word_list[i], word_list[j])/(length * (length-1))
+    return intra_sim
 
-def remove_named_entities(text):
-        # Load the spaCy model to remove named entities
-        nlp = spacy.load("en_core_web_sm")
-        doc = nlp(text)
-        return ' '.join([token.text for token in doc if token.ent_type_ != "PERSON"])  # Exclude PERSON entities
+def get_inter_similarity(word_list1, word_list2, model_w2v):
+    length1 = len(word_list1)
+    length2 = len(word_list2)
+    inter_sim = 0
+    for i in range(length1):
+        for j in range(length2):
+            if word_list1[i] in model_w2v and word_list2[j] in model_w2v:
+                inter_sim += model_w2v.similarity(word_list1[i], word_list2[j])/(length1 * length2)
+    return inter_sim
+
+def get_similarity(mod, model_w2v):
+    word_by_topics = []
+    for _, topic_words in mod.show_topics(num_topics=-1, num_words=10, formatted=False):
+        words = [word for word, _ in topic_words]  # Extract just the words
+        word_by_topics.append(words)
+    nbr_topics = len(word_by_topics)
+    coherence_score = []
+    for i in range(nbr_topics):
+        for j in range(nbr_topics):
+            if i != j:
+                intra_similarity_i = get_intra_similarity(word_by_topics[i], model_w2v)
+                intra_similarity_j = get_intra_similarity(word_by_topics[j], model_w2v)
+                inter_similarity = get_inter_similarity(word_by_topics[i], word_by_topics[j], model_w2v)
+                coherence_score.append((intra_similarity_i + intra_similarity_j) / (2 * inter_similarity))
+    return np.mean(coherence_score)
 
 
-def synopses_processing(sentences):
-    # Process a list of sentences by removing named entities, filtering out stop words and converting words to lowercase
-
-    stop_words = set(stopwords.words('english'))
-    
-    # Remove named entities
-    cleaned_sentences= [remove_named_entities(doc) for doc in sentences]
-    print("After removing names their are", len(cleaned_sentences), "sentences")
-    
-    # Remove stop words and lowercase word
-    processed_sentences = [
-        [word for word in word_tokenize(sentence.lower()) if word.isalnum() and word not in stop_words]
-        for sentence in cleaned_sentences
-    ]
-
-    return processed_sentences
 
