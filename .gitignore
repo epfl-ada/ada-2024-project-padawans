@@ -5,3 +5,5 @@ Data/plot_summaries.txt
 Data/title.ratings.tsv
 Data/processed_sentences.pkl
 .DS_Store
+GoogleNews-vectors-negative300.bin
+word2vec.model.vectors.npy
