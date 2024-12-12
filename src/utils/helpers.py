@@ -12,6 +12,10 @@ from nltk.corpus import stopwords
 from imdb import IMDb
 import re
 
+# Wordcloud intereactive plor
+from wordcloud import WordCloud
+from ipywidgets import interact, widgets
+
 #Functions
 def replace_empty_with_nan(value):
     # Replace empty lists with NaN
@@ -89,5 +93,20 @@ def get_similarity(mod, model_w2v):
                 coherence_score.append((intra_similarity_i + intra_similarity_j) / (2 * inter_similarity))
     return np.mean(coherence_score)
 
+
+def generate_wordcloud(genre): 
+    # Generate word cloud for a specific genre
+    genre_synopsis = LDA_df[LDA_df['Movie genres'].apply(lambda x: genre in x if isinstance(x, list) else False)]['plot_synopsis']
+    synopsis_text = " ".join(genre_synopsis.dropna().astype(str))
+    
+    # Generate a word cloud
+    wordcloud = WordCloud(width=800, height=400, background_color='white', colormap='viridis').generate(synopsis_text)
+    
+    # Plot the word cloud
+    plt.figure(figsize=(10, 6))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+    plt.title(f'Word Cloud for {genre}', fontsize=16)
+    plt.show()
 
 
