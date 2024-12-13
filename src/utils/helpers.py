@@ -2,6 +2,8 @@
 import numpy as np
 import pandas as pd
 import ast
+import matplotlib.pyplot as plt
+
 
 # LDA
 import spacy
@@ -94,9 +96,9 @@ def get_similarity(mod, model_w2v):
     return np.mean(coherence_score)
 
 
-def generate_wordcloud(genre): 
-    # Generate word cloud for a specific genre
-    genre_synopsis = LDA_df[LDA_df['Movie genres'].apply(lambda x: genre in x if isinstance(x, list) else False)]['plot_synopsis']
+# Function to generate word cloud for a specific genre
+def generate_wordcloud(genre, file, target1, target2):
+    genre_synopsis = file[file[target1].apply(lambda x: genre in x if isinstance(x, list) else False)][target2]
     synopsis_text = " ".join(genre_synopsis.dropna().astype(str))
     
     # Generate a word cloud
@@ -108,5 +110,6 @@ def generate_wordcloud(genre):
     plt.axis('off')
     plt.title(f'Word Cloud for {genre}', fontsize=16)
     plt.show()
+
 
 
