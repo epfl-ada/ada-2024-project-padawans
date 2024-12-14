@@ -18,6 +18,11 @@ import re
 from wordcloud import WordCloud
 from ipywidgets import interact, widgets
 
+#Networks
+import networkx as nx
+from networkx.algorithms import bipartite
+import matplotlib.lines as mlines
+
 #Functions
 def replace_empty_with_nan(value):
     # Replace empty lists with NaN
@@ -110,6 +115,158 @@ def generate_wordcloud(genre, file, target1, target2):
     plt.axis('off')
     plt.title(f'Word Cloud for {genre}', fontsize=16)
     plt.show()
+
+#Draw network with movie genres
+def draw_network_genre(movie_df, threshold):
+    genre_array = movie_df['Movie genres'].apply(ast.literal_eval)
+    # Get the list of genres
+    all_genres = genre_array.explode().tolist()
+    genre_list = list(set(all_genres))
+    topic_list = topic_dic.values()
+
+    B = nx.Graph()
+    B.add_nodes_from(topic_list, bipartite=0)
+    B.add_nodes_from(genre_list, bipartite=1)
+    edges = []
+    topic_occ = np.zeros(len(topic_list))
+
+    #Iterate through all topics and then all genres
+    #For a topic, if on average a genre is more present than the threshold, an edge is added between the topic and the genre
+    i = 0
+    for topic in topic_list:
+        curr = movie_df[movie_df['Main Topic'] == topic]
+        topic_occ[i] = len(curr)
+        for genre in genre_list:
+            isin = curr['Movie genres'].apply(lambda x : genre in x)
+            genre_mean = np.mean(isin)
+            if genre_mean > threshold:
+                edges.append((topic, genre))
+        i += 1
+    B.add_edges_from(edges)
+    projected = bipartite.weighted_projected_graph(B, topic_list, ratio=False)
+    weights = nx.get_edge_attributes(projected,'weight')
+    pos = nx.spring_layout(projected, seed=7)
+    scaled_weights = [1.3 * weights[edge] for edge in projected.edges()]
+    node_sizes = 10000 * topic_occ/topic_occ.sum()
+    plt.figure(figsize=(12,12))
+    nx.draw_networkx_nodes(
+        projected, pos,
+        node_color='lightblue', node_size=node_sizes,
+        alpha=0.9 
+    )
+    i = 0
+    for node, (x, y) in pos.items():
+        label = str(node) 
+        plt.text(
+            x, y, label,
+            weight='bold',
+            fontsize=6*(1 + node_sizes[i]/5000), 
+            horizontalalignment='center', verticalalignment='center'
+        )
+        i += 1
+    nx.draw_networkx_edges(
+        projected, 
+        pos, 
+        edge_color='grey', 
+        width=scaled_weights,  # Set edges width proportional to the number of common genres
+        alpha=0.55 
+    )
+    pourcent1 = 10000 * 0.01
+    pourcent5 = 10000 * 0.05
+    pourcent10 = 10000 * 0.1
+    
+    edge1 = 1
+    edge5 = 5
+    legend_elements = [
+        plt.Line2D([0], [0], linestyle="none", marker="o", color='lightblue', markersize=2*np.sqrt(pourcent1/np.pi),
+                   label="1%"),
+        plt.Line2D([0], [0], linestyle="none", marker="o", color='lightblue', markersize=2*np.sqrt(pourcent5/np.pi),
+                   label="5%"), 
+        plt.Line2D([0], [0], linestyle="none", marker="o", color='lightblue', markersize=2*np.sqrt(pourcent10/np.pi),
+                   label="10%"),         
+        mlines.Line2D([], [], color='grey', linewidth=1.3 * edge1,
+                      label="1"),
+        mlines.Line2D([], [], color='grey', linewidth=1.3 * edge5,
+                      label="5")
+    ]
+    plt.legend(handles=legend_elements, loc='upper right', fontsize=10, labelspacing=2.5, frameon=True)
+
+#Draw network with tags
+def draw_network_tags(movie_df, threshold):
+    df_copy = movie_df.copy()
+    df_copy['tags'] = movie_df['tags'].apply(lambda x : [item.strip() for item in x.split(',')])
+    genre_array = df_copy['tags']
+    # Get the list of genres
+    all_genres = genre_array.explode().tolist()
+    genre_list = list(set(all_genres))
+    topic_list = topic_dic.values()
+
+    B = nx.Graph()
+    B.add_nodes_from(topic_list, bipartite=0)
+    B.add_nodes_from(genre_list, bipartite=1)
+    edges = []
+    topic_occ = np.zeros(len(topic_list))
+
+    #Iterate through all topics and then all genres
+    #For a topic, if on average a genre is more present than the threshold, an edge is added between the topic and the genre
+    i = 0
+    for topic in topic_list:
+        curr = df_copy[movie_df['Main Topic'] == topic]
+        topic_occ[i] = len(curr)
+        for genre in genre_list:
+            isin = curr['tags'].apply(lambda x : genre in x)
+            genre_mean = np.mean(isin)
+            if genre_mean > threshold:
+                edges.append((topic, genre))
+        i += 1
+    B.add_edges_from(edges)
+    projected = bipartite.weighted_projected_graph(B, topic_list, ratio=False)
+    weights = nx.get_edge_attributes(projected,'weight')
+    pos = nx.spring_layout(projected, seed=7)
+    scaled_weights = [1.3 * weights[edge] for edge in projected.edges()]
+    node_sizes = 10000 * topic_occ/topic_occ.sum()
+    plt.figure(figsize=(12,12))
+    nx.draw_networkx_nodes(
+        projected, pos,
+        node_color='lightblue', node_size=node_sizes,
+        alpha=0.9 
+    )
+    i = 0
+    for node, (x, y) in pos.items():
+        label = str(node) 
+        plt.text(
+            x, y, label,
+            weight='bold',
+            fontsize=6*(1 + node_sizes[i]/5000), 
+            horizontalalignment='center', verticalalignment='center'
+        )
+        i += 1
+    nx.draw_networkx_edges(
+        projected, 
+        pos, 
+        edge_color='grey', 
+        width=scaled_weights,  # Set edges width proportional to the number of common genres
+        alpha=0.55 
+    )
+    pourcent1 = 10000 * 0.01
+    pourcent5 = 10000 * 0.05
+    pourcent10 = 10000 * 0.1
+    
+    edge1 = 1
+    edge5 = 5
+    legend_elements = [
+        plt.Line2D([0], [0], linestyle="none", marker="o", color='lightblue', markersize=2*np.sqrt(pourcent1/np.pi),
+                   label="1%"),
+        plt.Line2D([0], [0], linestyle="none", marker="o", color='lightblue', markersize=2*np.sqrt(pourcent5/np.pi),
+                   label="5%"), 
+        plt.Line2D([0], [0], linestyle="none", marker="o", color='lightblue', markersize=2*np.sqrt(pourcent10/np.pi),
+                   label="10%"),         
+        mlines.Line2D([], [], color='grey', linewidth=1.3 * edge1,
+                      label="1"),
+        mlines.Line2D([], [], color='grey', linewidth=1.3 * edge5,
+                      label="5")
+    ]
+    plt.legend(handles=legend_elements, loc='upper right', fontsize=10, labelspacing=2.5, frameon=True)
 
 
 
