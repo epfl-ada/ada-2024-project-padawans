@@ -118,7 +118,9 @@ def generate_wordcloud(genre, file, target1, target2):
 
 #Draw network with movie genres
 def draw_network_genre(movie_df, topic_dic, threshold):
+    df_copy = movie_df.copy()
     genre_array = movie_df['Movie genres'].apply(ast.literal_eval)
+    df_copy['Movie genres'] = genre_array
     # Get the list of genres
     all_genres = genre_array.explode().tolist()
     genre_list = list(set(all_genres))
@@ -133,19 +135,25 @@ def draw_network_genre(movie_df, topic_dic, threshold):
     #Iterate through all topics and then all genres
     #For a topic, if on average a genre is more present than the threshold, an edge is added between the topic and the genre
     i = 0
+    random_proba_sum = 0
+    genre_proba = 0
     for topic in topic_list:
-        curr = movie_df[movie_df['Main Topic'] == topic]
+        curr = df_copy[df_copy['Main Topic'] == topic]
         topic_occ[i] = len(curr)
+        avr_genre_number = np.mean(curr['Movie genres'].apply(lambda x : len(x)))
+        random_proba_sum += avr_genre_number/len(genre_list)
         for genre in genre_list:
             isin = curr['Movie genres'].apply(lambda x : genre in x)
+            #print(len(genre_list))
             genre_mean = np.mean(isin)
+            genre_proba += genre_mean
             if genre_mean > threshold:
                 edges.append((topic, genre))
         i += 1
     B.add_edges_from(edges)
     projected = bipartite.weighted_projected_graph(B, topic_list, ratio=False)
     weights = nx.get_edge_attributes(projected,'weight')
-    pos = nx.spring_layout(projected, seed=7)
+    pos = nx.spring_layout(projected, seed=6)
     scaled_weights = [1.3 * weights[edge] for edge in projected.edges()]
     node_sizes = 10000 * topic_occ/topic_occ.sum()
     plt.figure(figsize=(12,12))
@@ -190,6 +198,7 @@ def draw_network_genre(movie_df, topic_dic, threshold):
                       label="5")
     ]
     plt.legend(handles=legend_elements, loc='upper right', fontsize=10, labelspacing=2.5, frameon=True)
+    return random_proba_sum/(len(topic_list) * len(genre_list)), genre_proba/(len(topic_list) * len(genre_list))
 
 #Draw network with tags
 def draw_network_tags(movie_df, topic_dic, threshold):
@@ -210,12 +219,17 @@ def draw_network_tags(movie_df, topic_dic, threshold):
     #Iterate through all topics and then all genres
     #For a topic, if on average a genre is more present than the threshold, an edge is added between the topic and the genre
     i = 0
+    random_proba_sum = 0
+    genre_proba = 0
     for topic in topic_list:
-        curr = df_copy[movie_df['Main Topic'] == topic]
+        curr = df_copy[df_copy['Main Topic'] == topic]
         topic_occ[i] = len(curr)
+        avr_genre_number = np.mean(curr['tags'].apply(lambda x : len(x)))
         for genre in genre_list:
             isin = curr['tags'].apply(lambda x : genre in x)
             genre_mean = np.mean(isin)
+            genre_proba += genre_mean
+            random_proba_sum += avr_genre_number/len(genre_list)
             if genre_mean > threshold:
                 edges.append((topic, genre))
         i += 1
@@ -267,6 +281,6 @@ def draw_network_tags(movie_df, topic_dic, threshold):
                       label="5")
     ]
     plt.legend(handles=legend_elements, loc='upper right', fontsize=10, labelspacing=2.5, frameon=True)
-
+    return random_proba_sum/(len(topic_list) * len(genre_list)), genre_proba/(len(topic_list) * len(genre_list))
 
 
