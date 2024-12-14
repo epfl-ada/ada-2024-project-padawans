@@ -117,7 +117,7 @@ def generate_wordcloud(genre, file, target1, target2):
     plt.show()
 
 #Draw network with movie genres
-def draw_network_genre(movie_df, threshold):
+def draw_network_genre(movie_df, topic_dic, threshold):
     genre_array = movie_df['Movie genres'].apply(ast.literal_eval)
     # Get the list of genres
     all_genres = genre_array.explode().tolist()
@@ -192,7 +192,7 @@ def draw_network_genre(movie_df, threshold):
     plt.legend(handles=legend_elements, loc='upper right', fontsize=10, labelspacing=2.5, frameon=True)
 
 #Draw network with tags
-def draw_network_tags(movie_df, threshold):
+def draw_network_tags(movie_df, topic_dic, threshold):
     df_copy = movie_df.copy()
     df_copy['tags'] = movie_df['tags'].apply(lambda x : [item.strip() for item in x.split(',')])
     genre_array = df_copy['tags']
