@@ -18,10 +18,19 @@ import re
 from wordcloud import WordCloud
 from ipywidgets import interact, widgets
 
-#Networks
+# Networks
 import networkx as nx
 from networkx.algorithms import bipartite
 import matplotlib.lines as mlines
+
+# Linear Regression
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.model_selection import train_test_split
+from scipy.stats import ttest_1samp
+from sklearn.decomposition import PCA
+from sklearn.feature_extraction.text import TfidfVectorizer
+from scipy.sparse import hstack
 
 #Functions
 def replace_empty_with_nan(value):
@@ -283,4 +292,98 @@ def draw_network_tags(movie_df, topic_dic, threshold):
     plt.legend(handles=legend_elements, loc='upper right', fontsize=10, labelspacing=2.5, frameon=True)
     return random_proba_sum/(len(topic_list) * len(genre_list)), genre_proba/(len(topic_list) * len(genre_list))
 
+# Train and evaluate a Linear Regression model 
+def train_and_evaluate(X_train, X_test, y_train, y_test):
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    rmse = mean_squared_error(y_test, y_pred, squared=False)
+    r2 = r2_score(y_test, y_pred)
+    return rmse, r2, y_pred
+
+# Process the textual feautres using TF-IDF vectorizers and PCA for better capture of relationships    
+def process_text_features_with_pca(data, textual_features, max_features=50, pca_variance=0.95, random_state=42):
+
+    # Initialize TF-IDF vectorizers for textual features
+    vectorizers = {feature: TfidfVectorizer(max_features=max_features) for feature in textual_features}
+
+    # Apply TF-IDF transformation to each textual column
+    tfidf_transformed = {
+        feature: vectorizers[feature].fit_transform(
+            data[feature].fillna('').astype(str)  # Ensure all entries are strings and NaNs are replaced
+        )
+        for feature in textual_features
+    }
+
+    # Combine all TF-IDF vectors into a single sparse matrix
+    tfidf_combined = hstack(list(tfidf_transformed.values()))
+
+    # Apply PCA to TF-IDF features
+    pca = PCA(n_components=pca_variance, random_state=random_state)
+    tfidf_reduced = pca.fit_transform(tfidf_combined.toarray())
+
+    return vectorizers, tfidf_combined, pca, tfidf_reduced
+
+
+# Allow to get the PCA top contributers 
+def get_pca_top_contributions(pca, vectorizers, num_components_to_inspect=3, top_n=10):
+ 
+    # Get PCA loadings (how much each original feature contributes to each PCA component)
+    pca_loadings = pca.components_
+
+    # Combine all TF-IDF feature names from the vectorizers
+    tfidf_feature_names = []
+    for key in vectorizers:
+        tfidf_feature_names.extend(vectorizers[key].get_feature_names_out())
+
+    # Analyze the top contributing features for the specified PCA components
+    top_contributions = {}
+    for i in range(num_components_to_inspect):
+        component_loadings = pca_loadings[i]
+        # Get the indices of the top contributing features for this component
+        top_indices = component_loadings.argsort()[-top_n:][::-1]
+        top_features = [(tfidf_feature_names[j], component_loadings[j]) for j in top_indices]
+        top_contributions[f"PCA Component {i+1}"] = top_features
+
+    return top_contributions
+
+# Train many times a random model to compare with our current model
+def test_significance(X_combined_reduced, y, rmse_comb, r2_comb, n_iterations=100):
+# Store RMSE and R² for shuffled models
+    rmse_shuffled_list = []
+    r2_shuffled_list = []
+
+    # Perform multiple shufflings and evaluations
+    for _ in range(n_iterations):
+        X_combined_shuffled = X_combined_reduced.copy()
+        np.random.shuffle(X_combined_shuffled)
+    
+        X_train_shuff, X_test_shuff, y_train_shuff, y_test_shuff = train_test_split(
+        X_combined_shuffled, y, test_size=0.2, random_state=42
+        )
+    
+        rmse_shuff, r2_shuff, _ = train_and_evaluate(X_train_shuff, X_test_shuff, y_train_shuff, y_test_shuff)
+        rmse_shuffled_list.append(rmse_shuff)
+        r2_shuffled_list.append(r2_shuff)
+
+    # Compute differences in performance metrics (Combined Model - Shuffled Models)
+    rmse_diff = np.array(rmse_shuffled_list) - rmse_comb
+    r2_diff = np.array(r2_shuffled_list) - r2_comb
+
+    # Perform t-tests for RMSE and R² differences
+    t_test_rmse = ttest_1samp(rmse_diff, 0)
+    t_test_r2 = ttest_1samp(r2_diff, 0)
+
+    # Summarize results
+    shuffled_results_summary = pd.DataFrame({
+        'Metric': ['RMSE', 'R²'],
+        'Combined Model': [rmse_comb, r2_comb],
+        'Random Model (Mean)': [np.mean(rmse_shuffled_list), np.mean(r2_shuffled_list)],
+        'Mean Difference (Combined - Random)': [np.mean(rmse_diff), np.mean(r2_diff)],
+        'p-value': [t_test_rmse.pvalue, t_test_r2.pvalue]
+    })
+
+    print("Shuffled Model Performance with Statistical Significance", shuffled_results_summary)
+    return rmse_shuffled_list, r2_shuffled_list
+    
 
