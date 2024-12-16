@@ -18,6 +18,10 @@ import re
 from wordcloud import WordCloud
 from ipywidgets import interact, widgets
 
+# Plot ratings
+import plotly.graph_objects as go
+
+
 # Networks
 import networkx as nx
 from networkx.algorithms import bipartite
@@ -292,6 +296,53 @@ def draw_network_tags(movie_df, topic_dic, threshold):
     plt.legend(handles=legend_elements, loc='upper right', fontsize=10, labelspacing=2.5, frameon=True)
     return random_proba_sum/(len(topic_list) * len(genre_list)), genre_proba/(len(topic_list) * len(genre_list))
 
+
+# Plot the ratings distribution across top genres
+def plot_ratings_dropdown(file, genre_column, rating_column, top_n=20, output_html="ratings_dropdown.html"):
+    # Get the top N genres by frequency
+    top_genres = file[genre_column].value_counts().head(top_n).index
+
+    # Initialize the Plotly figure
+    fig = go.Figure()
+
+    # Add a histogram for each of the top genres (initially invisible)
+    for genre in top_genres:
+        filtered_data = file[file[genre_column] == genre]
+        fig.add_trace(go.Histogram(
+            x=filtered_data[rating_column],
+            name=genre,
+            nbinsx=50,
+            visible=False
+        ))
+
+    # Make the first genre visible by default
+    fig.data[0].visible = True
+
+    # Create dropdown menu for selecting genres
+    dropdown_buttons = [
+        dict(
+            label=genre,
+            method="update",
+            args=[{"visible": [i == idx for i in range(len(top_genres))]},
+                  {"title": f"Ratings Distribution for Genre: {genre}"}])
+        for idx, genre in enumerate(top_genres)
+    ]
+
+    # Update layout so that dropdown placed in the top-left corner
+    fig.update_layout(
+        updatemenus=[dict(active=0,buttons=dropdown_buttons,direction="down",x=0.01,xanchor="left",y=0.99,yanchor="top",)],
+        title=f"Ratings Distribution Across Top {top_n} Genres",
+        xaxis_title="IMDB Ratings",
+        yaxis_title="Frequency"
+    )
+
+    # Save the plot as an HTML file
+    fig.write_html(output_html)
+
+    # Show the plot
+    fig.show()
+
+
 # Train and evaluate a Linear Regression model 
 def train_and_evaluate(X_train, X_test, y_train, y_test):
     model = LinearRegression()
@@ -299,70 +350,76 @@ def train_and_evaluate(X_train, X_test, y_train, y_test):
     y_pred = model.predict(X_test)
     rmse = mean_squared_error(y_test, y_pred, squared=False)
     r2 = r2_score(y_test, y_pred)
-    return rmse, r2, y_pred
-
-# Process the textual feautres using TF-IDF vectorizers and PCA for better capture of relationships    
-def process_text_features_with_pca(data, textual_features, max_features=50, pca_variance=0.95, random_state=42):
-
-    # Initialize TF-IDF vectorizers for textual features
-    vectorizers = {feature: TfidfVectorizer(max_features=max_features) for feature in textual_features}
-
-    # Apply TF-IDF transformation to each textual column
-    tfidf_transformed = {
-        feature: vectorizers[feature].fit_transform(
-            data[feature].fillna('').astype(str)  # Ensure all entries are strings and NaNs are replaced
-        )
-        for feature in textual_features
-    }
-
-    # Combine all TF-IDF vectors into a single sparse matrix
-    tfidf_combined = hstack(list(tfidf_transformed.values()))
-
-    # Apply PCA to TF-IDF features
-    pca = PCA(n_components=pca_variance, random_state=random_state)
-    tfidf_reduced = pca.fit_transform(tfidf_combined.toarray())
-
-    return vectorizers, tfidf_combined, pca, tfidf_reduced
+    return rmse, r2, y_pred, model
 
 
-# Allow to get the PCA top contributers 
-def get_pca_top_contributions(pca, vectorizers, num_components_to_inspect=3, top_n=10):
- 
-    # Get PCA loadings (how much each original feature contributes to each PCA component)
-    pca_loadings = pca.components_
+# Give the most important features in each categories
+def analyze_feature_importance(textual_features, tfidf_matrices, tfidf_vectorizers, model, rmse, r2, numerical_features=None, numerical=False):
+    results = {}
+    start_idx = 0
 
-    # Combine all TF-IDF feature names from the vectorizers
-    tfidf_feature_names = []
-    for key in vectorizers:
-        tfidf_feature_names.extend(vectorizers[key].get_feature_names_out())
+    # Analyze textual features
+    for feature in textual_features:
+        n_features = tfidf_matrices[feature].shape[1]
+        coefficients = model.coef_[start_idx:start_idx + n_features]
+        feature_names = tfidf_vectorizers[feature].get_feature_names_out()
 
-    # Analyze the top contributing features for the specified PCA components
-    top_contributions = {}
-    for i in range(num_components_to_inspect):
-        component_loadings = pca_loadings[i]
-        # Get the indices of the top contributing features for this component
-        top_indices = component_loadings.argsort()[-top_n:][::-1]
-        top_features = [(tfidf_feature_names[j], component_loadings[j]) for j in top_indices]
-        top_contributions[f"PCA Component {i+1}"] = top_features
+        # Get the top 10 positive and negative features
+        sorted_indices = np.argsort(coefficients)
+        top_positive = [(feature_names[i], coefficients[i]) for i in sorted_indices[::-1][:10]]
+        top_negative = [(feature_names[i], coefficients[i]) for i in sorted_indices[:10]]
 
-    return top_contributions
+        results[feature] = {
+            "Top Positive Features": top_positive,
+            "Top Negative Features": top_negative
+        }
+        start_idx += n_features
 
-# Train many times a random model to compare with our current model
+    # Analyze numerical features if enabled
+    numerical_feature_importance = []
+    if numerical and numerical_features is not None:
+        numerical_coefficients = model.coef_[start_idx:]
+        numerical_feature_importance = list(zip(numerical_features, numerical_coefficients))
+        results["Numerical Features"] = numerical_feature_importance
+
+    # Output results and evaluation metrics
+    print(f"Mean Squared Error (MSE): {rmse}")
+    print(f"R-squared (R²): {r2}")
+    for feature, analysis in results.items():
+        if feature != "Numerical Features":
+            print(f"\nFeature: {feature}")
+            print("Top Positive Features:")
+            for term, coef in analysis["Top Positive Features"]:
+                print(f"  {term}: {coef:.4f}")
+            print("Top Negative Features:")
+            for term, coef in analysis["Top Negative Features"]:
+                print(f"  {term}: {coef:.4f}")
+        else:
+            print("\nNumerical Feature Importance:")
+            for num_feature, coef in numerical_feature_importance:
+                print(f"  {num_feature}: {coef:.4f}")
+
+    return results
+
+
 def test_significance(X_combined_reduced, y, rmse_comb, r2_comb, n_iterations=100):
 # Store RMSE and R² for shuffled models
     rmse_shuffled_list = []
     r2_shuffled_list = []
+    X_combined_reduced = X_combined_reduced.tocsr()
 
     # Perform multiple shufflings and evaluations
     for _ in range(n_iterations):
-        X_combined_shuffled = X_combined_reduced.copy()
-        np.random.shuffle(X_combined_shuffled)
+        indices = np.arange(X_combined_reduced.shape[0])  # Get row indices
+        np.random.shuffle(indices)  # Shuffle the indices
+        X_combined_shuffled = X_combined_reduced[indices]  # Reorder rows using the shuffled indices
+
     
         X_train_shuff, X_test_shuff, y_train_shuff, y_test_shuff = train_test_split(
         X_combined_shuffled, y, test_size=0.2, random_state=42
         )
     
-        rmse_shuff, r2_shuff, _ = train_and_evaluate(X_train_shuff, X_test_shuff, y_train_shuff, y_test_shuff)
+        rmse_shuff, r2_shuff, _, _ = train_and_evaluate(X_train_shuff, X_test_shuff, y_train_shuff, y_test_shuff)
         rmse_shuffled_list.append(rmse_shuff)
         r2_shuffled_list.append(r2_shuff)
 
@@ -385,5 +442,6 @@ def test_significance(X_combined_reduced, y, rmse_comb, r2_comb, n_iterations=10
 
     print("Shuffled Model Performance with Statistical Significance", shuffled_results_summary)
     return rmse_shuffled_list, r2_shuffled_list
+
     
 
