@@ -83,19 +83,10 @@ In order to visualise the three interactive Plotly plots, it is required to simp
 3. Look at the characteristics (country, ratings, box-office) of the themes
 4. Look at the temporal evolution of the themes
 
-# Organization within the team: A list of internal milestones up until project Milestone P3.
-To ensure the successful completion of the project within the remaining three weeks, the following timeline has been established:
-
-### Week 1: Data Preparation and Model Implementation
-+ Download and organize datasets
-+ Preprocess movie synopses: Clean and prepare the data by removing stop words, names, and any irrelevant content.
-+ Implement the LDA model: Apply the model to the preprocessed data and experiment with different numbers of topics.
-+ Optimize for coherence scores: Identify the most coherent topics and interpret them.
-### Week 2: Analysis of the themes discovered
-+ Identify and analyze discovered themes: Determine if these themes align with or provide new insights beyond existing genres and tags.
-+ Check if some themes have tendancies in box-office or ratings.
-+ Check the temporal evolution of themes.
-### Week 3: Gather results and write Final Reporting
-+ Summarize insights: Assess model quality and compile the main findings related to new themes and their implications.
-+ Prepare the final report and presentation: Highlight the project’s outcomes, insights, and recommendations for enhancing movie recommendations.
+# Contribution of members
++ Chloé : LDA topics analysis
++ Clara : Creating the website
++ Esteban : LDA topics analysis
++ Camille : Cleaning of the notebook, final project formulation
++ Thomas : Preprocessing data, create and analyze LDA models
 
