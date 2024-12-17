@@ -115,19 +115,47 @@ def get_similarity(mod, model_w2v):
 
 
 # Function to generate word cloud for a specific genre
-def generate_wordcloud(genre, file, target1, target2):
-    genre_synopsis = file[file[target1].apply(lambda x: genre in x if isinstance(x, list) else False)][target2]
-    synopsis_text = " ".join(genre_synopsis.dropna().astype(str))
+def generate_interactive_wordcloud(file, target1, target2, output_html="interactive_wordclouds.html", top_n=20):
+    # Extract the top N genres by frequency
+    genre_counts = file[target1].explode().value_counts()
+    top_genres = genre_counts.head(top_n).index
+
+    # Create a Plotly figure
+    fig = go.Figure()
+
+    # Generate a word cloud for each genre
+    for genre in top_genres:
+        genre_synopsis = file[file[target1].apply(lambda x: genre in x if isinstance(x, list) else False)][target2]
+        synopsis_text = " ".join(genre_synopsis.dropna().astype(str))
+
+        # Generate the word cloud
+        wordcloud = WordCloud(width=800, height=400, background_color='white', colormap='viridis').generate(synopsis_text)
+        wordcloud_image = wordcloud.to_array()
+
+        # Add a trace for the word cloud (initially invisible)
+        fig.add_trace(go.Image(z=wordcloud_image, visible=False))
+
+    # Make the first word cloud visible by default
+    fig.data[0].visible = True
+
+    # Create dropdown buttons
+    dropdown_buttons = [ dict(label=genre,method="update",args=[{"visible": [i == idx for i in range(len(top_genres))]},{"title": f"Word Cloud for Genre: {genre}"}])
+        for idx, genre in enumerate(top_genres)]
+
+    # Update layout with dropdown menu
+    fig.update_layout(
+        updatemenus=[dict(active=0,buttons=dropdown_buttons,direction="down",x=0.01,xanchor="left",y=0.99,yanchor="top",)],
+        title="Word Cloud for Genres",
+        xaxis=dict(visible=False),
+        yaxis=dict(visible=False),
+        margin=dict(l=10, r=10, t=30, b=10),
+    )
+
+    # Save as an interactive HTML file
+    fig.write_html(output_html)
     
-    # Generate a word cloud
-    wordcloud = WordCloud(width=800, height=400, background_color='white', colormap='viridis').generate(synopsis_text)
-    
-    # Plot the word cloud
-    plt.figure(figsize=(10, 6))
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis('off')
-    plt.title(f'Word Cloud for {genre}', fontsize=16)
-    plt.show()
+    # Show the plot
+    fig.show()
 
 #Draw network with movie genres
 def draw_network_genre(movie_df, topic_dic, threshold):
