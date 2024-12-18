@@ -471,5 +471,80 @@ def test_significance(X_combined_reduced, y, rmse_comb, r2_comb, n_iterations=10
     print("Shuffled Model Performance with Statistical Significance", shuffled_results_summary)
     return rmse_shuffled_list, r2_shuffled_list
 
+def draw_bipartite(movie_df, topic_dic, threshold, mode='genres'):
+    """
+    Draws a bipartite graph between topics and genres, only including genres with connections.
+
+    Parameters:
+        movie_df (DataFrame): DataFrame containing movie data, including 'Movie genres' and 'Main Topic'.
+        topic_dic (dict): Dictionary of topics.
+        threshold (float): Threshold to determine connections.
+
+    Returns:
+        tuple: Average random probability and genre probability.
+    """
+    # Step 1: Prepare data
+    df_copy = movie_df.copy()
+
+    if mode == "genres":
+        genre_array = df_copy['Movie genres'].apply(ast.literal_eval)
+        plot_title = "Filtered Bipartite Graph: Topics and Connected Genres"
+    elif mode == "tags":
+        df_copy['tags'] = df_copy['tags'].apply(lambda x: [item.strip() for item in x.split(',')])
+        genre_array = df_copy['tags']
+        plot_title = "Filtered Bipartite Graph: Topics and Connected Tags"
+    else:
+        raise ValueError("Mode must be either 'genres' or 'tags'")
+
+    df_copy['Movie genres'] = genre_array
+    all_genres = genre_array.explode().tolist()
+    genre_list = list(set(all_genres))
+    topic_list = list(topic_dic.values())
+
+    # Step 2: Build the bipartite graph
+    B = nx.Graph()
+    B.add_nodes_from(topic_list, bipartite=0)  # Topics
+    B.add_nodes_from(genre_list, bipartite=1)  # Genres
+
+    edges = []
+    topic_occ = np.zeros(len(topic_list))
+
+    # Step 3: Add edges based on threshold
+    for i, topic in enumerate(topic_list):
+        curr = df_copy[df_copy['Main Topic'] == topic]
+        topic_occ[i] = len(curr)
+        for genre in genre_list:
+            genre_mean = np.mean(curr['Movie genres'].apply(lambda x: genre in x))
+            if genre_mean > threshold:
+                edges.append((topic, genre))
+
+    B.add_edges_from(edges)
+
+    # Step 4: Filter nodes to keep only connected genres
+    connected_genres = {v for u, v in B.edges() if u in topic_list}
+    connected_nodes = topic_list + list(connected_genres)
+    B_filtered = B.subgraph(connected_nodes)
+
+    # Step 5: Layout and visualization
+    pos = nx.bipartite_layout(B_filtered, topic_list)
+    plt.figure(figsize=(14, 14))
+
+    # Node sizes and colors
+    node_sizes = [800 if n in topic_list else 300 for n in B_filtered.nodes()]
+    node_colors = ['lightgreen' if n in topic_list else 'lightblue' for n in B_filtered.nodes()]
+
+    # Draw graph
+    nx.draw(
+        B_filtered, pos,
+        with_labels=True,
+        node_color=node_colors,
+        node_size=node_sizes,
+        edge_color='gray',
+        width=1.5,
+        font_size=13
+    )
+
+    plt.title(plot_title)
+    plt.show()
     
 
