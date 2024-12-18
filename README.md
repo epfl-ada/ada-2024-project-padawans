@@ -72,10 +72,6 @@ Some files required for this project are too large to store in the repository (>
    - Location: Place this file in the `Data/` folder.
    
 Make sure to follow the directory structure to ensure the project runs correctly.
-
-## Important note 
-
-In order to visualise the three interactive Plotly plots, it is required to simply download the results.ipynb notebook and to open it in a code editor such as VSCode (the code will already be run). These plots are not shown in the file on github.
    
 # Timeline
 1. Present different themes obtained with LDA, depending on the number of topics
