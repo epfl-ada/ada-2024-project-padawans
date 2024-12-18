@@ -80,9 +80,9 @@ Make sure to follow the directory structure to ensure the project runs correctly
 4. Look at the temporal evolution of the themes
 
 # Contribution of members
-+ Chloé : LDA topics analysis
++ Chloé : Feature analysis
 + Clara : Creating the website
-+ Esteban : LDA topics analysis
-+ Camille : Cleaning of the notebook, final project formulation
-+ Thomas : Preprocessing data, create and analyze LDA models
++ Esteban : Similarity Analysis
++ Camille : Recommendation Analysis, Graph Analysis
++ Thomas : Preprocessing data, Topics discovery, Graph Analysis
 
