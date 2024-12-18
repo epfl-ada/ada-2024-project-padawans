@@ -15,10 +15,10 @@ Movie recommendation algorithms often use users' viewing histories to suggest si
 
 
 # Research questions
-+ What themes can be recovered using LDA?
-+ Are those themes reflecting the genres? Or labels from the MPST dataset?
-+ Are themes reflecting countries or epoques ?
-+ What are the tendancies in ratings/box-office for different movie themes?
++ What topics can be recovered using LDA on the movie synopsis?
++ Do these topics reflect the genres? Or labels from the MPST dataset?
++ Are topics enough for movie recommendations?
++ What additional features should we consider?
 
 *Note: If the coherence score is low the rest of the analysis will remain valid using the label from the MPST dataset*
 
@@ -72,10 +72,6 @@ Some files required for this project are too large to store in the repository (>
    - Location: Place this file in the `Data/` folder.
    
 Make sure to follow the directory structure to ensure the project runs correctly.
-
-## Important note 
-
-In order to visualise the three interactive Plotly plots, it is required to simply download the results.ipynb notebook and to open it in a code editor such as VSCode (the code will already be run). These plots are not shown in the file on github.
    
 # Timeline
 1. Present different themes obtained with LDA, depending on the number of topics
@@ -84,9 +80,9 @@ In order to visualise the three interactive Plotly plots, it is required to simp
 4. Look at the temporal evolution of the themes
 
 # Contribution of members
-+ Chloé : LDA topics analysis
++ Chloé : Feature analysis
 + Clara : Creating the website
-+ Esteban : LDA topics analysis
-+ Camille : Cleaning of the notebook, final project formulation
-+ Thomas : Preprocessing data, create and analyze LDA models
++ Esteban : Similarity Analysis
++ Camille : Recommendation Analysis, Graph Analysis
++ Thomas : Preprocessing data, Topics discovery, Graph Analysis
 
