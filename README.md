@@ -15,10 +15,10 @@ Movie recommendation algorithms often use users' viewing histories to suggest si
 
 
 # Research questions
-+ What themes can be recovered using LDA?
-+ Are those themes reflecting the genres? Or labels from the MPST dataset?
-+ Are themes reflecting countries or epoques ?
-+ What are the tendancies in ratings/box-office for different movie themes?
++ What topics can be recovered using LDA on the movie synopsis?
++ Do these topics reflect the genres? Or labels from the MPST dataset?
++ Are topics enough for movie recommendations?
++ What additional features should we consider?
 
 *Note: If the coherence score is low the rest of the analysis will remain valid using the label from the MPST dataset*
 
