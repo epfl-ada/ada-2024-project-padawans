@@ -11,7 +11,11 @@ pip install -r pip_requirements.txt
 
 
 # Abstract (150 words)
-Movie recommendation algorithms often use users' viewing histories to suggest similar content through a method known as Content-Based Filtering. Similarity can be defined in many ways, such as genres, shared directors or box-office earnings. This project focuses on using movie synopses to assess similarity, employing Latent Dirichlet Allocation (LDA) for unsupervised clustering. LDA is utilized to uncover hidden themes within movie synopses that extend beyond conventional genres, revealing deeper patterns in movie content. By analyzing these newly discovered themes, we aim to identify unique connections between films, enabling enhanced and diversified movie recommendations.
+Movie recommendation algorithms typically rely on users' viewing histories to suggest similar content using a method called Content-Based Filtering. Similarity is often defined through genres, shared directors, or box-office earnings. This project, however, focuses on leveraging movie synopses to assess similarity, employing Latent Dirichlet Allocation (LDA) for unsupervised clustering. LDA is used to uncover 15 hidden themes within movie synopses that go beyond traditional genres, revealing deeper patterns in the content. By analyzing these themes, we aim to identify unique connections between films, with additional consideration of language and country of origin, to enable more enhanced and diversified movie recommendations.
+
+# Example Instance
+Enter a movie name and get your next watch!
+![image](https://github.com/user-attachments/assets/38ee01c8-89e6-489a-9b10-5d9097e39e58)
 
 
 # Research questions
@@ -19,13 +23,6 @@ Movie recommendation algorithms often use users' viewing histories to suggest si
 + Do these topics reflect the genres? Or labels from the MPST dataset?
 + Are topics enough for movie recommendations?
 + What additional features should we consider?
-
-*Note: If the coherence score is low the rest of the analysis will remain valid using the label from the MPST dataset*
-
-# Proposed additional datasets
-MPST: Movie Plot Synopses with Tags: to retrieve movies' synopsis (https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)
-
-IMDb ratings: to get movie ratings (https://developer.imdb.com/non-commercial-datasets/)
 
 
 # Methods
@@ -39,17 +36,6 @@ It filters out words that are highly repetitive across documents, as they don't 
 + Each document is a mixture of corpus wide topics
 + Each word is drawn from one of those topics
 
-
-The users must decide on the amount of topics present in the document as well as interpret what the topics are.
-
-To assess the quality of the model, we will evaluate its coherence score.
-
-### Coherence score
-Coherence measures how well the words grouped in a given topic are related in meaning and whether they frequently co-occur within the same document. A higher coherence score indicates that the words in a topic are semantically related and distinct from other topics, suggesting that the topic grouping is meaningful and accurate.
-
-sources: 
-https://medium.com/@pinakdatta/understanding-lda-unveiling-hidden-topics-in-text-data-9bbbd25ae162
-https://medium.com/analytics-vidhya/latent-dirichelt-allocation-1ec8729589d4#:~:text=Latent%20Dirichlet%20Allocation%20(LDA)%20is%20a%20method%20for%20associating%20sentences,facts%20before%20applying%20these%20processes.
 
 ## Required External Files
 
@@ -78,16 +64,10 @@ Some files required for this project are too large to store in the repository (>
    
 Make sure to follow the directory structure to ensure the project runs correctly.
    
-# Timeline
-1. Present different themes obtained with LDA, depending on the number of topics
-2. Compare the themes obtained with the labels and the genres
-3. Look at the characteristics (country, ratings, box-office) of the themes
-4. Look at the temporal evolution of the themes
-
 # Contribution of members
-+ Chloé : Feature analysis
++ Chloé : Feature analysis, Ratings Analysis
 + Clara : Creating the website
-+ Esteban : Similarity Analysis
++ Esteban : Similarity Analysis, Files organizations
 + Camille : Recommendation Analysis, Graph Analysis
 + Thomas : Preprocessing data, Topics discovery, Graph Analysis
 
