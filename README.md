@@ -40,19 +40,20 @@ It filters out words that are highly repetitive across documents, as they don't 
   
 ## Project Structure
 ```bash
-├── data                        <- Project data files
+├── Data                        <- Project data files
+│
+├── Notebooks                   <- Notebooks used to run preprocessing steps or models
 │
 ├── src                         <- Source code
 │   ├── data                            <- Data directory containing plots (.html)
 │   ├── models                          <- Model directory (LDA models)
+|   ├── scripts                         <- Shell scripts
 │   ├── utils                           <- Utility directory (helpers.py)
-│   ├── scripts                         <- Shell scripts
-│
-├── results.ipynb               <- Notebook showing all results
 │
 ├── .gitignore                  <- List of files ignored by git
+├── README.md
 ├── pip_requirements.txt        <- File to install python dependencies
-└── README.md
+└── results.ipynb               <- Notebook showing all results
 ```
 
 ## Required External Files
