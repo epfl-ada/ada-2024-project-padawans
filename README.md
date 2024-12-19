@@ -8,7 +8,7 @@ cd <project repo>
 # install requirements
 pip install -r pip_requirements.txt
 ```
-
+All results are displayed on our [website](https://clarachappuis.github.io/) 
 
 # Abstract 
 Movie recommendation algorithms typically rely on users' viewing histories to suggest similar content using a method called Content-Based Filtering. Similarity is often defined through genres, shared directors, or box-office earnings. This project, however, focuses on leveraging movie synopses to assess similarity, employing Latent Dirichlet Allocation (LDA) for unsupervised clustering. LDA is used to uncover 15 hidden themes within movie synopses that go beyond traditional genres, revealing deeper patterns in the content. By analyzing these themes, we aim to identify unique connections between films, with additional consideration of language and country of origin, to enable more enhanced and diversified movie recommendations.
@@ -37,22 +37,24 @@ It filters out words that are highly repetitive across documents, as they don't 
 + Each topic is a distribution over words
 + Each document is a mixture of corpus wide topics
 + Each word is drawn from one of those topics
-
+  
+## Structure
+Data/ -Movie
 
 ## Required External Files
 
 Some files required for this project are too large to store in the repository (>25MB). Thus, once you have cloned the repository locally, please download the required files from the following sources:
 
-1. **Movie Summaries**: [link to file](https://www.cs.cmu.edu/~ark/personas/data/MovieSummaries.tar.gz)  
+1. [**Movie Summaries**:](https://www.cs.cmu.edu/~ark/personas/data/MovieSummaries.tar.gz)  
    - Description: Original given movie dataset.
    - Location: Unzip the file and only keep `movie.metadata.tsv` and `plot_summaries` in the `Data/` folder.
 
-2. **MPST: Movie Plot Synopses with Tags**: [link to file](https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)  
+2. [**MPST: Movie Plot Synopses with Tags**: ](https://www.kaggle.com/datasets/cryptexcode/mpst-movie-plot-synopses-with-tags?resource=download)  
    - Description: Contains movies' synopsis (and tags).
    - Steps to follow: Click on the Download button on the top right part of the screen to download the file. It will show you a sub-menu where you can click on 'Download dataset as zip' to download the file.
    - Location: Place this file in the `Data/` folder.
 
-3. **Movie ratings dataset**: [link to file](https://datasets.imdbws.com/title.ratings.tsv.gz)  
+3. [**Movie ratings dataset**: ](https://datasets.imdbws.com/title.ratings.tsv.gz)  
    - Description: Contains movie ratings (mean) and the number of ratings received.
    - Location: Place this file in the `Data/` folder.
 
@@ -60,7 +62,7 @@ Some files required for this project are too large to store in the repository (>
    - This file can be found in the `Data/` folder.
    - Description: Contains movie box incomes extracted with IMdB library
 
-5. **Processed sentences for LDA**: [link to file](https://drive.google.com/file/d/1K_l2LZGIvGgbZ3Q-u0v3W-_dRlWlIpOM/view?usp=sharing)
+5. [**Processed sentences for LDA**: ](https://drive.google.com/file/d/1K_l2LZGIvGgbZ3Q-u0v3W-_dRlWlIpOM/view?usp=sharing)
    - Description: Contains sentences without stop words and names.
    - Location: Place this file in the `Data/` folder.
    
