@@ -47,7 +47,7 @@ It filters out words that are highly repetitive across documents, as they don't 
 ├── src                         <- Source code
 │   ├── data                            <- Data directory containing plots (.html)
 │   ├── models                          <- Model directory (LDA models)
-|   ├── scripts                         <- Shell scripts
+│   ├──  scripts                        <- Shell scripts
 │   ├── utils                           <- Utility directory (helpers.py)
 │
 ├── .gitignore                  <- List of files ignored by git
