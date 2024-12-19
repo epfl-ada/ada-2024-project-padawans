@@ -37,6 +37,9 @@ It filters out words that are highly repetitive across documents, as they don't 
 + Each topic is a distribution over words
 + Each document is a mixture of corpus wide topics
 + Each word is drawn from one of those topics
+
+## How to use the library
+Tell us how the code is arranged, any explanations goes here. (ADD)
   
 ## Project Structure
 ```bash
