@@ -21,7 +21,6 @@ from ipywidgets import interact, widgets
 # Plot ratings
 import plotly.graph_objects as go
 
-
 # Networks
 import networkx as nx
 from networkx.algorithms import bipartite
