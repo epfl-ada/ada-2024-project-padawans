@@ -88,8 +88,7 @@ Make sure to follow the directory structure to ensure the project runs correctly
    
 # Contribution of members
 + Chloé : Feature analysis, Ratings Analysis
-+ Clara : Creating the website
-+ Esteban : Similarity Analysis, Files organizations
++ Clara : Creation and maintenance of the website
++ Esteban : Similarity Analysis, Files organisations
 + Camille : Recommendation Analysis, Graph Analysis
 + Thomas : Preprocessing data, Topics discovery, Graph Analysis
-
