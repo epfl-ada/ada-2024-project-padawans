@@ -16,7 +16,9 @@ import re
 
 # Wordcloud intereactive plor
 from wordcloud import WordCloud
-from ipywidgets import interact, widgets
+from PIL import Image
+import io
+from collections import defaultdict
 
 # Plot ratings
 import plotly.graph_objects as go
@@ -116,46 +118,67 @@ def get_similarity(mod, model_w2v):
     return np.mean(coherence_score)
 
 
-# Function to generate word cloud for a specific genre
-def generate_interactive_wordcloud(file, target1, target2, output_html="interactive_wordclouds.html", top_n=20):
-    # Extract the top N genres by frequency
-    genre_counts = file[target1].explode().value_counts()
-    top_genres = genre_counts.head(top_n).index
 
-    # Create a Plotly figure
+# Function to generate word cloud and return as a NumPy array
+def wordcloud_to_image(text):
+    wordcloud = WordCloud(width=500, height=300, background_color='white').generate(text)
+    img_buffer = io.BytesIO()  # Create an in-memory buffer
+    plt.figure(figsize=(10, 5))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+    plt.savefig(img_buffer, format='png', bbox_inches='tight', pad_inches=0)  # Save image to buffer
+    plt.close()
+    img_buffer.seek(0)
+    img = Image.open(img_buffer)  # Open image from buffer
+    return np.array(img)  # Convert to NumPy array
+
+
+def create_wordcloud_figure(wordcloud_df, top_genres, output_html='wordcloud.html'):
+    # Initialize a defaultdict with lists as default values
+    genre_synopsis_map = defaultdict(list)
+
+    # Iterate through the DataFrame to populate genre_synopsis_map
+    for _, row in wordcloud_df.iterrows():
+        for genre in row['Movie genres']:
+            genre_synopsis_map[genre].append(row['plot_synopsis'])
+
+    # Combine all synopses for each genre
+    genre_synopsis_map = {genre: " ".join(synopses) for genre, synopses in genre_synopsis_map.items()}
+
+    # Generate word clouds for the top genres
+    wordcloud_images = [wordcloud_to_image(genre_synopsis_map[genre]) for genre in top_genres]
+
+    # Create a Plotly figure with dropdowns
     fig = go.Figure()
 
-    # Generate a word cloud for each genre
-    for genre in top_genres:
-        genre_synopsis = file[file[target1].apply(lambda x: genre in x if isinstance(x, list) else False)][target2]
-        synopsis_text = " ".join(genre_synopsis.dropna().astype(str))
+    # Add an image trace for each word cloud
+    for i, genre in enumerate(top_genres):
+        fig.add_trace(go.Image(z=wordcloud_images[i], visible=(i == 0)))  # Only first visible by default
 
-        # Generate the word cloud
-        wordcloud = WordCloud(width=800, height=400, background_color='white', colormap='viridis').generate(synopsis_text)
-        wordcloud_image = wordcloud.to_array()
+    # Add dropdown menu for toggling between word clouds
+    dropdown_buttons = [
+        dict(
+            label=genre,
+            method="update",
+            args=[{"visible": [j == i for j in range(len(top_genres))]},
+                  {"title": f"Word Cloud for Genre: {genre}"}]
+        )
+        for i, genre in enumerate(top_genres)
+    ]
 
-        # Add a trace for the word cloud (initially invisible)
-        fig.add_trace(go.Image(z=wordcloud_image, visible=False))
-
-    # Make the first word cloud visible by default
-    fig.data[0].visible = True
-
-    # Create dropdown buttons
-    dropdown_buttons = [ dict(label=genre,method="update",args=[{"visible": [i == idx for i in range(len(top_genres))]},{"title": f"Word Cloud for Genre: {genre}"}])
-        for idx, genre in enumerate(top_genres)]
-
-    # Update layout with dropdown menu
+    # Update layout with dropdown and title
     fig.update_layout(
-        updatemenus=[dict(active=0,buttons=dropdown_buttons,direction="down",x=0.01,xanchor="left",y=0.99,yanchor="top",)],
-        title="Word Cloud for Genres",
-        xaxis=dict(visible=False),
-        yaxis=dict(visible=False),
-        margin=dict(l=10, r=10, t=30, b=10),
+        updatemenus=[dict(buttons=dropdown_buttons, direction="down", x=0.1, xanchor="left", y=1.15, yanchor="top")],
+        title=f"Word Cloud for Top Genres",
+        title_x=0.5,
+        margin=dict(l=0, r=0, t=40, b=0),
+        xaxis=dict(visible=False),  # Hide x-axis
+        yaxis=dict(visible=False), 
     )
-
+    
     # Save as an interactive HTML file
     fig.write_html(output_html)
-    
+
     # Show the plot
     fig.show()
 
