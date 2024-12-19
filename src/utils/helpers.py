@@ -327,25 +327,31 @@ def draw_network_tags(movie_df, topic_dic, threshold):
     return random_proba_sum/(len(topic_list) * len(genre_list)), genre_proba/(len(topic_list) * len(genre_list))
 
 
-# Plot the ratings distribution across top genres
+# Plot the ratings distribution across the top_n genres
 def plot_ratings_dropdown(file, genre_column, rating_column, top_n=20, output_html="ratings_dropdown.html"):
-    # Get the top N genres by frequency
-    top_genres = file[genre_column].value_counts().head(top_n).index
+  
+    # Explode genres and calculate the top N genres by frequency
+    all_genres = file[genre_column].apply(ast.literal_eval).explode()
+    genres_counts = all_genres.value_counts()
+    top_genres = genres_counts.head(top_n).index.tolist()
 
     # Initialize the Plotly figure
     fig = go.Figure()
 
-    # Add a histogram for each of the top genres (initially invisible)
+    # Add a histogram for each genre
     for genre in top_genres:
-        filtered_data = file[file[genre_column] == genre]
+        # Filter the data to include only rows containing the current genre
+        filtered_data = file[file[genre_column].apply(lambda x: genre in ast.literal_eval(x))]
+
+        # Add a histogram for the current genre
         fig.add_trace(go.Histogram(
             x=filtered_data[rating_column],
             name=genre,
             nbinsx=50,
-            visible=False
+            visible=False  # Set all histograms to invisible initially
         ))
 
-    # Make the first genre visible by default
+    # Make the first genre's histogram visible by default
     fig.data[0].visible = True
 
     # Create dropdown menu for selecting genres
@@ -358,12 +364,62 @@ def plot_ratings_dropdown(file, genre_column, rating_column, top_n=20, output_ht
         for idx, genre in enumerate(top_genres)
     ]
 
-    # Update layout so that dropdown placed in the top-left corner
+    # Update layout with dropdown and appropriate titles
     fig.update_layout(
-        updatemenus=[dict(active=0,buttons=dropdown_buttons,direction="down",x=0.01,xanchor="left",y=0.99,yanchor="top",)],
+        updatemenus=[dict(
+            active=0,
+            buttons=dropdown_buttons,
+            direction="down",
+            x=0.01,
+            xanchor="left",
+            y=0.99,
+            yanchor="top"
+        )],
         title=f"Ratings Distribution Across Top {top_n} Genres",
         xaxis_title="IMDB Ratings",
         yaxis_title="Frequency"
+    )
+
+    # Save the plot as an HTML file
+    fig.write_html(output_html)
+
+    # Show the plot
+    fig.show()
+
+# Plot the boxplot for average ratings for the top_genres
+def plot_genre_boxplot(file, genre_column, rating_column, top_genres, output_html="genre_boxplot.html"):
+    # Prepare the data for box plots
+    data = []
+    for genre in top_genres:
+        # Filter rows where the current genre exists
+        filtered_data = file[file[genre_column].apply(lambda x: genre in ast.literal_eval(x))]
+
+        # Append a column for the genre
+        filtered_data = filtered_data.copy()
+        filtered_data['Genre'] = genre
+
+        # Append to the combined data
+        data.append(filtered_data)
+
+    # Combine all data into a single DataFrame
+    combined_data = pd.concat(data)
+
+    # Create a box plot
+    fig = px.box(
+        combined_data,
+        x="Genre",
+        y=rating_column,
+        points="outliers", 
+        title="Rating Distribution for Top Genres",
+        labels={rating_column: "IMDB Ratings", "Genre": "Movie Genres"},
+    )
+
+    # Customize layout
+    fig.update_layout(
+        title_x=0.5,
+        xaxis_title="Genres",
+        yaxis_title="IMDB Ratings",
+        xaxis_tickangle=45,
     )
 
     # Save the plot as an HTML file
