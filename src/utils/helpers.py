@@ -1,9 +1,9 @@
 #Libraries 
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import ast
 import matplotlib.pyplot as plt
-
 
 # LDA
 import spacy
@@ -21,11 +21,13 @@ from ipywidgets import interact, widgets
 # Plot ratings
 import plotly.graph_objects as go
 
-
 # Networks
 import networkx as nx
 from networkx.algorithms import bipartite
 import matplotlib.lines as mlines
+
+# PCA
+import plotly.express as px
 
 # Linear Regression
 from sklearn.linear_model import LinearRegression
@@ -471,5 +473,215 @@ def test_significance(X_combined_reduced, y, rmse_comb, r2_comb, n_iterations=10
     print("Shuffled Model Performance with Statistical Significance", shuffled_results_summary)
     return rmse_shuffled_list, r2_shuffled_list
 
+def draw_bipartite(movie_df, topic_dic, threshold, mode='genres'):
+    """
+    Draws a bipartite graph between topics and genres, only including genres with connections.
+
+    Parameters:
+        movie_df (DataFrame): DataFrame containing movie data, including 'Movie genres' and 'Main Topic'.
+        topic_dic (dict): Dictionary of topics.
+        threshold (float): Threshold to determine connections.
+
+    Returns:
+        tuple: Average random probability and genre probability.
+    """
+    # Step 1: Prepare data
+    df_copy = movie_df.copy()
+
+    if mode == "genres":
+        genre_array = df_copy['Movie genres'].apply(ast.literal_eval)
+        plot_title = "Filtered Bipartite Graph: Topics and Connected Genres"
+    elif mode == "tags":
+        df_copy['tags'] = df_copy['tags'].apply(lambda x: [item.strip() for item in x.split(',')])
+        genre_array = df_copy['tags']
+        plot_title = "Filtered Bipartite Graph: Topics and Connected Tags"
+    else:
+        raise ValueError("Mode must be either 'genres' or 'tags'")
+
+    df_copy['Movie genres'] = genre_array
+    all_genres = genre_array.explode().tolist()
+    genre_list = list(set(all_genres))
+    topic_list = list(topic_dic.values())
+
+    # Step 2: Build the bipartite graph
+    B = nx.Graph()
+    B.add_nodes_from(topic_list, bipartite=0)  # Topics
+    B.add_nodes_from(genre_list, bipartite=1)  # Genres
+
+    edges = []
+    topic_occ = np.zeros(len(topic_list))
+
+    # Step 3: Add edges based on threshold
+    for i, topic in enumerate(topic_list):
+        curr = df_copy[df_copy['Main Topic'] == topic]
+        topic_occ[i] = len(curr)
+        for genre in genre_list:
+            genre_mean = np.mean(curr['Movie genres'].apply(lambda x: genre in x))
+            if genre_mean > threshold:
+                edges.append((topic, genre))
+
+    B.add_edges_from(edges)
+
+    # Step 4: Filter nodes to keep only connected genres
+    connected_genres = {v for u, v in B.edges() if u in topic_list}
+    connected_nodes = topic_list + list(connected_genres)
+    B_filtered = B.subgraph(connected_nodes)
+
+    # Step 5: Layout and visualization
+    pos = nx.bipartite_layout(B_filtered, topic_list)
+    plt.figure(figsize=(14, 14))
+
+    # Node sizes and colors
+    node_sizes = [800 if n in topic_list else 300 for n in B_filtered.nodes()]
+    node_colors = ['lightgreen' if n in topic_list else 'lightblue' for n in B_filtered.nodes()]
+
+    # Draw graph
+    nx.draw(
+        B_filtered, pos,
+        with_labels=True,
+        node_color=node_colors,
+        node_size=node_sizes,
+        edge_color='gray',
+        width=1.5,
+        font_size=10
+    )
+
+    plt.title(plot_title)
+    plt.show()
     
 
+def format_topics(topics, num_topics=15):
+    topic_dict = {topic: prob for topic, prob in topics}
+    return [topic_dict.get(i, 0) for i in range(num_topics)]
+
+
+def recommend_similar_movie(movie_name, LDA_final):
+
+  # Check that movie name is in the dataframe
+  if not (LDA_final['Movie name'] == movie_name).any():
+    return "Error: This Movie is either mispelled or not in the database."
+
+  else:
+    # From movie name get topic score
+    movie_infos = LDA_final[LDA_final['Movie name'] == movie_name].iloc[0]
+    other_movies = LDA_final[~(LDA_final['Movie name'] == movie_name)]
+
+    # Euclidean distances
+    distances = other_movies['Topics'].apply(
+        lambda x: np.linalg.norm(x - movie_infos['Topics'])
+    )
+
+    closest_movie = distances.nsmallest(1).index[-1]
+    result = f"You should watch {other_movies['Movie name'].iloc[closest_movie]} (imdb_id: {other_movies['imdb_id'].iloc[closest_movie]})"
+    return result
+
+
+def plot_3d_pca(movie_data, x_col, y_col, z_col, color_col, title, palette_name="tab20", n_colors=15, width=1000, height=800):
+
+    """ 
+    Makes an interactive 3D scatter plot for PCA results grouped by topics.
+
+    Parameters:
+        movie_data (pd.DataFrame): The dataframe that has the PCA data and the grouping column.
+        x_col (str): Column to use for the x-axis.
+        y_col (str): Column to use for the y-axis.
+        z_col (str): Column to use for the z-axis.
+        color_col (str): Column to color the points by (like grouping by 'Main Topic').
+        title (str): The title of the plot.
+
+    Returns:
+        plotly.graph_objs._figure.Figure: The 3D scatter plot that's created.
+    """
+
+    # Generate the color palette
+    seaborn_palette = sns.color_palette(palette_name, n_colors=n_colors).as_hex() # Palette "tab20" that has 20 highly distinct colors
+
+    # Create the 3D scatter plot
+    fig = px.scatter_3d(
+        movie_data,
+        x=x_col,
+        y=y_col,
+        z=z_col,
+        color=color_col,
+        color_discrete_sequence=seaborn_palette,
+        title=title,
+        labels={x_col: 'Principal Component 1', y_col: 'Principal Component 2', z_col: 'Principal Component 3'},
+        width=width,
+        height=height
+    )
+
+    # Update trace to set dot sizes
+    fig.update_traces(
+        marker=dict(size=1), # Small dot size otherwise we can't see the interior of the structure
+        selector=dict(mode='markers')
+    )
+
+    # Adjust the legend
+    fig.update_layout(
+        legend=dict(
+            itemsizing='constant',
+            tracegroupgap=0
+        )
+    )
+
+    # Show the plot
+    fig.show()
+
+
+    
+def create_3d_scatter_with_ratings(data, x, y, z, color, title, plot_width=1000, plot_height=800, color_scale='RdYlGn', range_color=None):
+
+    """ 
+    Makes and shows an interactive 3D scatter plot, using color to represent average ratings.
+
+    Parameters:
+        data (pd.DataFrame): The DataFrame with the data to plot.
+        x (str): Column name for the x-axis.
+        y (str): Column name for the y-axis.
+        z (str): Column name for the z-axis.
+        color (str): Column to use for color coding (like 'averageRating').
+        title (str): The title for the plot.
+
+    Returns:
+        plotly.graph_objs._figure.Figure: The 3D scatter plot it creates.
+    """
+
+    # Create the 3D scatter plot
+ 
+    fig = px.scatter_3d(
+        data,
+        x=x,
+        y=y,
+        z=z,
+        color=color,
+        title=title,
+        labels={x: 'Principal Component 1', y: 'Principal Component 2', z: 'Principal Component 3'},
+        width=1000,
+        height=800,
+        color_continuous_scale='RdYlGn',
+        range_color=[4, 8]
+    )
+
+    # Update trace to adjust colorbar display
+    fig.update_traces(
+        marker=dict(
+            size=1,
+            colorbar=dict(
+                title="IMDb Rating",
+                tickvals=[4, 6, 8], # Customize tick values if range_color is set
+                ticktext=['4', '6', '8'] # Labels for the ticks
+            )
+        ),
+        selector=dict(mode='markers')
+    )
+
+    # Adjust legend for constant size
+    fig.update_layout(
+        legend=dict(
+            itemsizing='constant',
+            tracegroupgap=0
+        )
+    )
+
+    # Show the plot
+    fig.show()
