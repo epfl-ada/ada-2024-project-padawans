@@ -33,11 +33,16 @@ IMDb ratings: to get movie ratings (https://developer.imdb.com/non-commercial-da
 Latent Dirichlet Allocation (LDA) is a probabilistic model that assumes each document contains a mixture of multiple hidden topics. Initially, LDA randomly assigns words to topics, kicking off a learning procedure. It then traverses through each word in each document, applying the complex formula presented in the source. Through numerous iterations of this procedure, it eventually yields a set of topics. Rather than focusing on individual words, LDA identifies themes or topics that underlie the words in a collection of documents. 
 It filters out words that are highly repetitive across documents, as they don't contribute to distinguishing the themes. 
 
+<img src="https://cdn.botpenguin.com/assets/website/Topic_Modeling_35bd15572c.webp" width="400" height="400">
+
++ Each topic is a distribution over words
++ Each document is a mixture of corpus wide topics
++ Each word is drawn from one of those topics
+
+
 The users must decide on the amount of topics present in the document as well as interpret what the topics are.
 
 To assess the quality of the model, we will evaluate its coherence score.
-
-![Alt text](https://miro.medium.com/v2/resize:fit:1178/format:webp/0*J1oMupf58psVRVCH.png)
 
 ### Coherence score
 Coherence measures how well the words grouped in a given topic are related in meaning and whether they frequently co-occur within the same document. A higher coherence score indicates that the words in a topic are semantically related and distinct from other topics, suggesting that the topic grouping is meaningful and accurate.
