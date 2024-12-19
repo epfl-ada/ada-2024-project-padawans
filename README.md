@@ -14,8 +14,10 @@ pip install -r pip_requirements.txt
 Movie recommendation algorithms typically rely on users' viewing histories to suggest similar content using a method called Content-Based Filtering. Similarity is often defined through genres, shared directors, or box-office earnings. This project, however, focuses on leveraging movie synopses to assess similarity, employing Latent Dirichlet Allocation (LDA) for unsupervised clustering. LDA is used to uncover 15 hidden themes within movie synopses that go beyond traditional genres, revealing deeper patterns in the content. By analyzing these themes, we aim to identify unique connections between films, with additional consideration of language and country of origin, to enable more enhanced and diversified movie recommendations.
 
 # Example Instance
-Enter a movie name and get your next watch!
-![image](https://github.com/user-attachments/assets/38ee01c8-89e6-489a-9b10-5d9097e39e58)
+Enter a movie name you liked and get your next watch!
+
+<img src="https://github.com/user-attachments/assets/38ee01c8-89e6-489a-9b10-5d9097e39e58" alt="Image description" width="600"/>
+
 
 
 # Research questions
