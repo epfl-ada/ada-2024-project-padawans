@@ -39,6 +39,7 @@ It filters out words that are highly repetitive across documents, as they don't 
 + Each word is drawn from one of those topics
   
 ## Project Structure
+```bash
 ├── data                        <- Project data files
 │
 ├── src                         <- Source code
@@ -50,8 +51,9 @@ It filters out words that are highly repetitive across documents, as they don't 
 ├── results.ipynb               <- Notebook showing all results
 │
 ├── .gitignore                  <- List of files ignored by git
-├── pip_requirements.txt        <- File for installing python dependencies
+├── pip_requirements.txt        <- File to install python dependencies
 └── README.md
+```
 
 ## Required External Files
 
