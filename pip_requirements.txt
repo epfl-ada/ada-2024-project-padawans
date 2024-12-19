@@ -6,3 +6,10 @@ IMDbPY
 kagglehub
 spacy
 plotly
+ipywidgets
+seaborn
+scikit-learn
+scipy
+nltk
+pyLDAvis
+pickle5 
