@@ -38,8 +38,20 @@ It filters out words that are highly repetitive across documents, as they don't 
 + Each document is a mixture of corpus wide topics
 + Each word is drawn from one of those topics
   
-## Structure
-Data/ -Movie
+## Project Structure
+├── data                        <- Project data files
+│
+├── src                         <- Source code
+│   ├── data                            <- Data directory containing plots (.html)
+│   ├── models                          <- Model directory (LDA models)
+│   ├── utils                           <- Utility directory (helpers.py)
+│   ├── scripts                         <- Shell scripts
+│
+├── results.ipynb               <- Notebook showing all results
+│
+├── .gitignore                  <- List of files ignored by git
+├── pip_requirements.txt        <- File for installing python dependencies
+└── README.md
 
 ## Required External Files
 
